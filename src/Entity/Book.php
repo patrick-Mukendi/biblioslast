@@ -59,11 +59,24 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Author $authorBook = null;
 
+    /**
+     * @var Collection<int, Comments>
+     */
+    #[ORM\ManyToMany(targetEntity: Comments::class, mappedBy: 'books')]
+    private Collection $commentBook;
+
+    #[ORM\ManyToOne(inversedBy: 'book')]
+    private ?Editor $editorBook = null;
+
+    #[ORM\ManyToOne(inversedBy: 'book')]
+    private ?Author $authorbook = null;
+
     public function __construct()
     {
         $this->authors = new ArrayCollection();
         $this->Editor = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->commentBook = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,27 +104,7 @@ class Book
         return $this->authors;
     }
 
-    public function addAuthor(Author $author): static
-    {
-        if (!$this->authors->contains($author)) {
-            $this->authors->add($author);
-            $author->setBookAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuthor(Author $author): static
-    {
-        if ($this->authors->removeElement($author)) {
-            // set the owning side to null (unless already changed)
-            if ($author->getBookAuthor() === $this) {
-                $author->setBookAuthor(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getIsbn(): ?string
     {
@@ -247,6 +240,45 @@ class Book
     public function setAuthorBook(?Author $authorBook): static
     {
         $this->authorBook = $authorBook;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getCommentBook(): Collection
+    {
+        return $this->commentBook;
+    }
+
+    public function addCommentBook(Comments $commentBook): static
+    {
+        if (!$this->commentBook->contains($commentBook)) {
+            $this->commentBook->add($commentBook);
+            $commentBook->addBook($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentBook(Comments $commentBook): static
+    {
+        if ($this->commentBook->removeElement($commentBook)) {
+            $commentBook->removeBook($this);
+        }
+
+        return $this;
+    }
+
+    public function getEditorBook(): ?Editor
+    {
+        return $this->editorBook;
+    }
+
+    public function setEditorBook(?Editor $editorBook): static
+    {
+        $this->editorBook = $editorBook;
 
         return $this;
     }

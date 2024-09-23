@@ -33,9 +33,16 @@ class Author
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authorBook')]
     private Collection $books;
 
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authorbook')]
+    private Collection $book;
+
     public function __construct()
     {
         $this->books = new ArrayCollection();
+        $this->book = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,5 +126,13 @@ class Author
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBook(): Collection
+    {
+        return $this->book;
     }
 }

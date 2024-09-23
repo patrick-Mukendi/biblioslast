@@ -41,9 +41,16 @@ class Comments
     #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'comments')]
     private Collection $book;
 
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'commentBook')]
+    private Collection $books;
+
     public function __construct()
     {
         $this->book = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,5 +155,13 @@ class Comments
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBooks(): Collection
+    {
+        return $this->books;
     }
 }
