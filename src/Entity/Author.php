@@ -30,18 +30,11 @@ class Author
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authorBook')]
-    private Collection $books;
-
-    /**
-     * @var Collection<int, Book>
-     */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authorbook')]
     private Collection $book;
 
     public function __construct()
     {
-        $this->books = new ArrayCollection();
         $this->book = new ArrayCollection();
     }
 
@@ -94,36 +87,6 @@ class Author
     public function setNationality(string $nationality): static
     {
         $this->nationality = $nationality;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Book>
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
-    }
-
-    public function addBook(Book $book): static
-    {
-        if (!$this->books->contains($book)) {
-            $this->books->add($book);
-            $book->setAuthorBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBook(Book $book): static
-    {
-        if ($this->books->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getAuthorBook() === $this) {
-                $book->setAuthorBook(null);
-            }
-        }
 
         return $this;
     }
