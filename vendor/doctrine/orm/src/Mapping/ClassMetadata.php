@@ -7,6 +7,7 @@ namespace Doctrine\ORM\Mapping;
 use BackedEnum;
 use BadMethodCallException;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\Deprecations\Deprecation;
 use Doctrine\Instantiator\Instantiator;
 use Doctrine\Instantiator\InstantiatorInterface;
@@ -23,6 +24,7 @@ use ReflectionNamedType;
 use ReflectionProperty;
 use Stringable;
 
+use function array_column;
 use function array_diff;
 use function array_intersect;
 use function array_key_exists;
@@ -34,6 +36,7 @@ use function array_values;
 use function assert;
 use function class_exists;
 use function count;
+use function defined;
 use function enum_exists;
 use function explode;
 use function in_array;
@@ -1039,6 +1042,7 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
      */
     public function getColumnName(string $fieldName): string
     {
+        // @phpstan-ignore property.deprecated
         return $this->columnNames[$fieldName] ?? $fieldName;
     }
 
@@ -1118,9 +1122,7 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
     {
         $field = $this->reflClass->getProperty($mapping['fieldName']);
 
-        $mapping = $this->typedFieldMapper->validateAndComplete($mapping, $field);
-
-        return $mapping;
+        return $this->typedFieldMapper->validateAndComplete($mapping, $field);
     }
 
     /**
@@ -1188,6 +1190,7 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
             $mapping->quoted     = true;
         }
 
+        // @phpstan-ignore property.deprecated
         $this->columnNames[$mapping->fieldName] = $mapping->columnName;
 
         if (isset($this->fieldNames[$mapping->columnName]) || ($this->discriminatorColumn && $this->discriminatorColumn->name === $mapping->columnName)) {
@@ -1229,6 +1232,14 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
 
             if (! empty($mapping->id)) {
                 $this->containsEnumIdentifier = true;
+            }
+
+            if (
+                defined('Doctrine\DBAL\Types\Types::ENUM')
+                && $mapping->type === Types::ENUM
+                && ! isset($mapping->options['values'])
+            ) {
+                $mapping->options['values'] = array_column($mapping->enumType::cases(), 'value');
             }
         }
 
@@ -1768,6 +1779,7 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
 
         unset($this->fieldMappings[$fieldName]);
         unset($this->fieldNames[$mapping->columnName]);
+        // @phpstan-ignore property.deprecated
         unset($this->columnNames[$mapping->fieldName]);
 
         $overrideMapping = $this->validateAndCompleteFieldMapping($overrideMapping);
@@ -1918,8 +1930,9 @@ class ClassMetadata implements PersistenceClassMetadata, Stringable
     public function addInheritedFieldMapping(FieldMapping $fieldMapping): void
     {
         $this->fieldMappings[$fieldMapping->fieldName] = $fieldMapping;
-        $this->columnNames[$fieldMapping->fieldName]   = $fieldMapping->columnName;
-        $this->fieldNames[$fieldMapping->columnName]   = $fieldMapping->fieldName;
+        // @phpstan-ignore property.deprecated
+        $this->columnNames[$fieldMapping->fieldName] = $fieldMapping->columnName;
+        $this->fieldNames[$fieldMapping->columnName] = $fieldMapping->fieldName;
 
         if (isset($fieldMapping->generated)) {
             $this->requiresFetchAfterChange = true;

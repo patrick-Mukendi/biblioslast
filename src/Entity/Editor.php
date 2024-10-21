@@ -6,6 +6,7 @@ use App\Repository\EditorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EditorRepository::class)]
 class Editor
@@ -15,21 +16,26 @@ class Editor
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank()]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Editor')]
-    private ?Book $books = null;
+    /**
+     * @var Collection<int, Book>
+     */
+    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'editor')]
+    private Collection $bookEditor;
 
     /**
      * @var Collection<int, Book>
      */
     #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'editorBook')]
-    private Collection $book;
+    private Collection $books;
 
     public function __construct()
     {
-        $this->book = new ArrayCollection();
+        $this->bookEditor = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,14 +55,32 @@ class Editor
         return $this;
     }
 
-    public function getBooks(): ?Book
+    /**
+     * @return Collection<int, Book>
+     */
+    public function getBookEditor(): Collection
     {
-        return $this->books;
+        return $this->bookEditor;
     }
 
-    public function setBooks(?Book $books): static
+    public function addBookEditor(Book $bookEditor): static
     {
-        $this->books = $books;
+        if (!$this->bookEditor->contains($bookEditor)) {
+            $this->bookEditor->add($bookEditor);
+            $bookEditor->setEditor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBookEditor(Book $bookEditor): static
+    {
+        if ($this->bookEditor->removeElement($bookEditor)) {
+            // set the owning side to null (unless already changed)
+            if ($bookEditor->getEditor() === $this) {
+                $bookEditor->setEditor(null);
+            }
+        }
 
         return $this;
     }
@@ -64,15 +88,15 @@ class Editor
     /**
      * @return Collection<int, Book>
      */
-    public function getBook(): Collection
+    public function getBooks(): Collection
     {
-        return $this->book;
+        return $this->books;
     }
 
     public function addBook(Book $book): static
     {
-        if (!$this->book->contains($book)) {
-            $this->book->add($book);
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
             $book->setEditorBook($this);
         }
 
@@ -81,7 +105,7 @@ class Editor
 
     public function removeBook(Book $book): static
     {
-        if ($this->book->removeElement($book)) {
+        if ($this->books->removeElement($book)) {
             // set the owning side to null (unless already changed)
             if ($book->getEditorBook() === $this) {
                 $book->setEditorBook(null);

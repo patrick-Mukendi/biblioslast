@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Author {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 50px; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper" >
+    <h1>Liste Auteur</h1>
+   <ul class="list-group list-group-flush"> 
+    {% for items in author %}
+        <div class="card mb-1">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <h4 class="mb-1"> {{items.name}}</h4>
+                    <small class="text-muted">Identifiant: {{items.id}}</small>
+                </div>
+            </div>
+        </div>
+    {% else %}
+         <li>Pas d'Auteur</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

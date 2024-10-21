@@ -1,3 +1,9 @@
+# Upgrade to 3.3
+
+## Deprecate `DatabaseDriver`
+
+The class `Doctrine\ORM\Mapping\Driver\DatabaseDriver` is deprecated without replacement.
+
 # Upgrade to 3.2
 
 ## Deprecate the `NotSupported` exception
@@ -95,9 +101,11 @@ now they throw an exception.
 
 ## BC BREAK: Partial objects are removed
 
-- The `PARTIAL` keyword in DQL no longer exists.
-- `Doctrine\ORM\Query\AST\PartialObjectExpression`is removed.
-- `Doctrine\ORM\Query\SqlWalker::HINT_PARTIAL` and
+WARNING: This was relaxed in ORM 3.2 when partial was re-allowed for array-hydration.
+
+- The `PARTIAL` keyword in DQL no longer exists (reintroduced in ORM 3.2)
+- `Doctrine\ORM\Query\AST\PartialObjectExpression` is removed. (reintroduced in ORM 3.2)
+- `Doctrine\ORM\Query\SqlWalker::HINT_PARTIAL` (reintroduced in ORM 3.2) and
   `Doctrine\ORM\Query::HINT_FORCE_PARTIAL_LOAD` are removed.
 - `Doctrine\ORM\EntityManager*::getPartialReference()` is removed.
 
@@ -722,6 +730,42 @@ following classes and methods:
 - `IterableResult`
 
 Use `toIterable()` instead.
+
+# Upgrade to 2.20
+
+## Add `Doctrine\ORM\Query\OutputWalker` interface, deprecate `Doctrine\ORM\Query\SqlWalker::getExecutor()`
+
+Output walkers should implement the new `\Doctrine\ORM\Query\OutputWalker` interface and create
+`Doctrine\ORM\Query\Exec\SqlFinalizer` instances instead of `Doctrine\ORM\Query\Exec\AbstractSqlExecutor`s.
+The output walker must not base its workings on the query `firstResult`/`maxResult` values, so that the 
+`SqlFinalizer` can be kept in the query cache and used regardless of the actual `firstResult`/`maxResult` values.
+Any operation dependent on `firstResult`/`maxResult` should take place within the `SqlFinalizer::createExecutor()`
+method. Details can be found at https://github.com/doctrine/orm/pull/11188.
+
+## Explictly forbid property hooks
+
+Property hooks are not supported yet by Doctrine ORM. Until support is added,
+they are explicitly forbidden because the support would result in a breaking
+change in behavior.
+
+Progress on this is tracked at https://github.com/doctrine/orm/issues/11624 .
+
+## PARTIAL DQL syntax is undeprecated 
+
+Use of the PARTIAL keyword is not deprecated anymore in DQL, because we will be
+able to support PARTIAL objects with PHP 8.4 Lazy Objects and
+Symfony/VarExporter in a better way. When we decided to remove this feature
+these two abstractions did not exist yet.
+
+WARNING: If you want to upgrade to 3.x and still use PARTIAL keyword in DQL
+with array or object hydrators, then you have to directly migrate to ORM 3.3.x or higher.
+PARTIAL keyword in DQL is not available in 3.0, 3.1 and 3.2 of ORM.
+
+## Deprecate `\Doctrine\ORM\Query\Parser::setCustomOutputTreeWalker()`
+
+Use the `\Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER` query hint to set the output walker
+class instead of setting it through the `\Doctrine\ORM\Query\Parser::setCustomOutputTreeWalker()` method
+on the parser instance.
 
 # Upgrade to 2.19
 

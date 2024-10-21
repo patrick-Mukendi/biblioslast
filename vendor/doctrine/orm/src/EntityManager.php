@@ -24,7 +24,6 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\Query\FilterCollection;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use Throwable;
 
 use function array_keys;
 use function is_array;
@@ -178,18 +177,24 @@ class EntityManager implements EntityManagerInterface
     {
         $this->conn->beginTransaction();
 
+        $successful = false;
+
         try {
             $return = $func($this);
 
             $this->flush();
             $this->conn->commit();
 
-            return $return;
-        } catch (Throwable $e) {
-            $this->close();
-            $this->conn->rollBack();
+            $successful = true;
 
-            throw $e;
+            return $return;
+        } finally {
+            if (! $successful) {
+                $this->close();
+                if ($this->conn->isTransactionActive()) {
+                    $this->conn->rollBack();
+                }
+            }
         }
     }
 
@@ -479,9 +484,9 @@ class EntityManager implements EntityManagerInterface
     /**
      * Gets the repository for an entity class.
      *
-     * @psalm-param class-string<T> $className
+     * @param class-string<T> $className The name of the entity.
      *
-     * @psalm-return EntityRepository<T>
+     * @return EntityRepository<T> The repository class.
      *
      * @template T of object
      */

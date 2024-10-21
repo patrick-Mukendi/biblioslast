@@ -47,7 +47,7 @@ use function strtolower;
  */
 class SchemaTool
 {
-    private const KNOWN_COLUMN_OPTIONS = ['comment', 'unsigned', 'fixed', 'default'];
+    private const KNOWN_COLUMN_OPTIONS = ['comment', 'unsigned', 'fixed', 'default', 'values'];
 
     private readonly AbstractPlatform $platform;
     private readonly QuoteStrategy $quoteStrategy;
@@ -421,18 +421,12 @@ class SchemaTool
      */
     private function gatherColumns(ClassMetadata $class, Table $table): void
     {
-        $pkColumns = [];
-
         foreach ($class->fieldMappings as $mapping) {
             if ($class->isInheritanceTypeSingleTable() && isset($mapping->inherited)) {
                 continue;
             }
 
             $this->gatherColumn($class, $mapping, $table);
-
-            if ($class->isIdentifier($mapping->fieldName)) {
-                $pkColumns[] = $this->quoteStrategy->getColumnName($mapping->fieldName, $class, $this->platform);
-            }
         }
     }
 

@@ -15,7 +15,6 @@ use Doctrine\ORM\Mapping\QuoteStrategy;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Utility\HierarchyDiscriminatorResolver;
-use Doctrine\ORM\Utility\LockSqlHelper;
 use Doctrine\ORM\Utility\PersisterHelper;
 use InvalidArgumentException;
 use LogicException;
@@ -25,9 +24,12 @@ use function array_filter;
 use function array_keys;
 use function array_map;
 use function array_merge;
+use function array_pop;
 use function assert;
 use function count;
+use function end;
 use function implode;
+use function in_array;
 use function is_array;
 use function is_float;
 use function is_int;
@@ -48,9 +50,12 @@ use function trim;
  */
 class SqlWalker
 {
-    use LockSqlHelper;
-
     public const HINT_DISTINCT = 'doctrine.distinct';
+
+    /**
+     * Used to mark a query as containing a PARTIAL expression, which needs to be known by SLC.
+     */
+    public const HINT_PARTIAL = 'doctrine.partial';
 
     private readonly ResultSetMapping $rsm;
 
@@ -78,6 +83,13 @@ class SqlWalker
      * Counter for generating indexes.
      */
     private int $newObjectCounter = 0;
+
+    /**
+     * Contains nesting levels of new objects arguments
+     *
+     * @psalm-var array<int, array{0: string|int, 1: int}>
+     */
+    private array $newObjectStack = [];
 
     private readonly EntityManagerInterface $em;
     private readonly Connection $conn;
@@ -220,21 +232,38 @@ class SqlWalker
 
     /**
      * Gets an executor that can be used to execute the result of this walker.
+     *
+     * @deprecated Output walkers should no longer create the executor directly, but instead provide
+     *             a SqlFinalizer by implementing the `OutputWalker` interface. Thus, this method is
+     *             no longer needed and will be removed in 4.0.
      */
     public function getExecutor(AST\SelectStatement|AST\UpdateStatement|AST\DeleteStatement $statement): Exec\AbstractSqlExecutor
     {
         return match (true) {
-            $statement instanceof AST\SelectStatement
-                => new Exec\SingleSelectExecutor($statement, $this),
-            $statement instanceof AST\UpdateStatement
-                => $this->em->getClassMetadata($statement->updateClause->abstractSchemaName)->isInheritanceTypeJoined()
-                    ? new Exec\MultiTableUpdateExecutor($statement, $this)
-                    : new Exec\SingleTableDeleteUpdateExecutor($statement, $this),
-            $statement instanceof AST\DeleteStatement
-                => $this->em->getClassMetadata($statement->deleteClause->abstractSchemaName)->isInheritanceTypeJoined()
-                    ? new Exec\MultiTableDeleteExecutor($statement, $this)
-                    : new Exec\SingleTableDeleteUpdateExecutor($statement, $this),
+            $statement instanceof AST\UpdateStatement => $this->createUpdateStatementExecutor($statement),
+            $statement instanceof AST\DeleteStatement => $this->createDeleteStatementExecutor($statement),
+            default => new Exec\SingleSelectExecutor($statement, $this),
         };
+    }
+
+    /** @psalm-internal Doctrine\ORM */
+    protected function createUpdateStatementExecutor(AST\UpdateStatement $AST): Exec\AbstractSqlExecutor
+    {
+        $primaryClass = $this->em->getClassMetadata($AST->updateClause->abstractSchemaName);
+
+        return $primaryClass->isInheritanceTypeJoined()
+            ? new Exec\MultiTableUpdateExecutor($AST, $this)
+            : new Exec\SingleTableDeleteUpdateExecutor($AST, $this);
+    }
+
+    /** @psalm-internal Doctrine\ORM */
+    protected function createDeleteStatementExecutor(AST\DeleteStatement $AST): Exec\AbstractSqlExecutor
+    {
+        $primaryClass = $this->em->getClassMetadata($AST->deleteClause->abstractSchemaName);
+
+        return $primaryClass->isInheritanceTypeJoined()
+            ? new Exec\MultiTableDeleteExecutor($AST, $this)
+            : new Exec\SingleTableDeleteUpdateExecutor($AST, $this);
     }
 
     /**
@@ -304,6 +333,11 @@ class SqlWalker
             $sqlParts[] = $this->generateFilterConditionSQL($parentClass, $tableAlias);
 
             $sql .= implode(' AND ', array_filter($sqlParts));
+        }
+
+        // Ignore subclassing inclusion if partial objects is disallowed
+        if ($this->query->getHint(Query::HINT_FORCE_PARTIAL_LOAD)) {
+            return $sql;
         }
 
         // LEFT JOIN child class tables
@@ -464,10 +498,15 @@ class SqlWalker
      */
     public function walkSelectStatement(AST\SelectStatement $selectStatement): string
     {
-        $limit    = $this->query->getMaxResults();
-        $offset   = $this->query->getFirstResult();
-        $lockMode = $this->query->getHint(Query::HINT_LOCK_MODE) ?: LockMode::NONE;
-        $sql      = $this->walkSelectClause($selectStatement->selectClause)
+        $sql       = $this->createSqlForFinalizer($selectStatement);
+        $finalizer = new Exec\SingleSelectSqlFinalizer($sql);
+
+        return $finalizer->finalizeSql($this->query);
+    }
+
+    protected function createSqlForFinalizer(AST\SelectStatement $selectStatement): string
+    {
+        $sql = $this->walkSelectClause($selectStatement->selectClause)
             . $this->walkFromClause($selectStatement->fromClause)
             . $this->walkWhereClause($selectStatement->whereClause);
 
@@ -488,31 +527,22 @@ class SqlWalker
             $sql .= ' ORDER BY ' . $orderBySql;
         }
 
-        $sql = $this->platform->modifyLimitQuery($sql, $limit, $offset);
-
-        if ($lockMode === LockMode::NONE) {
-            return $sql;
-        }
-
-        if ($lockMode === LockMode::PESSIMISTIC_READ) {
-            return $sql . ' ' . $this->getReadLockSQL($this->platform);
-        }
-
-        if ($lockMode === LockMode::PESSIMISTIC_WRITE) {
-            return $sql . ' ' . $this->getWriteLockSQL($this->platform);
-        }
-
-        if ($lockMode !== LockMode::OPTIMISTIC) {
-            throw QueryException::invalidLockMode();
-        }
-
-        foreach ($this->selectedClasses as $selectedClass) {
-            if (! $selectedClass['class']->isVersioned) {
-                throw OptimisticLockException::lockFailed($selectedClass['class']->name);
-            }
-        }
+        $this->assertOptimisticLockingHasAllClassesVersioned();
 
         return $sql;
+    }
+
+    private function assertOptimisticLockingHasAllClassesVersioned(): void
+    {
+        $lockMode = $this->query->getHint(Query::HINT_LOCK_MODE) ?: LockMode::NONE;
+
+        if ($lockMode === LockMode::OPTIMISTIC) {
+            foreach ($this->selectedClasses as $selectedClass) {
+                if (! $selectedClass['class']->isVersioned) {
+                    throw OptimisticLockException::lockFailed($selectedClass['class']->name);
+                }
+            }
+        }
     }
 
     /**
@@ -644,7 +674,8 @@ class SqlWalker
             $this->query->setHint(self::HINT_DISTINCT, true);
         }
 
-        $addMetaColumns = $this->query->getHydrationMode() === Query::HYDRATE_OBJECT
+        $addMetaColumns = ! $this->query->getHint(Query::HINT_FORCE_PARTIAL_LOAD) &&
+            $this->query->getHydrationMode() === Query::HYDRATE_OBJECT
             || $this->query->getHint(Query::HINT_INCLUDE_META_COLUMNS);
 
         foreach ($this->selectedClasses as $selectedClass) {
@@ -1325,7 +1356,17 @@ class SqlWalker
                 break;
 
             default:
-                $dqlAlias    = $expr;
+                // IdentificationVariable or PartialObjectExpression
+                if ($expr instanceof AST\PartialObjectExpression) {
+                    $this->query->setHint(self::HINT_PARTIAL, true);
+
+                    $dqlAlias        = $expr->identificationVariable;
+                    $partialFieldSet = $expr->partialFieldSet;
+                } else {
+                    $dqlAlias        = $expr;
+                    $partialFieldSet = [];
+                }
+
                 $class       = $this->getMetadataForDqlAlias($dqlAlias);
                 $resultAlias = $selectExpression->fieldIdentificationVariable ?: null;
 
@@ -1341,6 +1382,10 @@ class SqlWalker
 
                 // Select all fields from the queried class
                 foreach ($class->fieldMappings as $fieldName => $mapping) {
+                    if ($partialFieldSet && ! in_array($fieldName, $partialFieldSet, true)) {
+                        continue;
+                    }
+
                     $tableName = isset($mapping->inherited)
                         ? $this->em->getClassMetadata($mapping->inherited)->getTableName()
                         : $class->getTableName();
@@ -1367,29 +1412,32 @@ class SqlWalker
 
                 // Add any additional fields of subclasses (excluding inherited fields)
                 // 1) on Single Table Inheritance: always, since its marginal overhead
-                // 2) on Class Table Inheritance
-                foreach ($class->subClasses as $subClassName) {
-                    $subClass      = $this->em->getClassMetadata($subClassName);
-                    $sqlTableAlias = $this->getSQLTableAlias($subClass->getTableName(), $dqlAlias);
+                // 2) on Class Table Inheritance only if partial objects are disallowed,
+                //    since it requires outer joining subtables.
+                if ($class->isInheritanceTypeSingleTable() || ! $this->query->getHint(Query::HINT_FORCE_PARTIAL_LOAD)) {
+                    foreach ($class->subClasses as $subClassName) {
+                        $subClass      = $this->em->getClassMetadata($subClassName);
+                        $sqlTableAlias = $this->getSQLTableAlias($subClass->getTableName(), $dqlAlias);
 
-                    foreach ($subClass->fieldMappings as $fieldName => $mapping) {
-                        if (isset($mapping->inherited)) {
-                            continue;
+                        foreach ($subClass->fieldMappings as $fieldName => $mapping) {
+                            if (isset($mapping->inherited) || ($partialFieldSet && ! in_array($fieldName, $partialFieldSet, true))) {
+                                continue;
+                            }
+
+                            $columnAlias      = $this->getSQLColumnAlias($mapping->columnName);
+                            $quotedColumnName = $this->quoteStrategy->getColumnName($fieldName, $subClass, $this->platform);
+
+                            $col = $sqlTableAlias . '.' . $quotedColumnName;
+
+                            $type = Type::getType($mapping->type);
+                            $col  = $type->convertToPHPValueSQL($col, $this->platform);
+
+                            $sqlParts[] = $col . ' AS ' . $columnAlias;
+
+                            $this->scalarResultAliasMap[$resultAlias][] = $columnAlias;
+
+                            $this->rsm->addFieldResult($dqlAlias, $columnAlias, $fieldName, $subClassName);
                         }
-
-                        $columnAlias      = $this->getSQLColumnAlias($mapping->columnName);
-                        $quotedColumnName = $this->quoteStrategy->getColumnName($fieldName, $subClass, $this->platform);
-
-                        $col = $sqlTableAlias . '.' . $quotedColumnName;
-
-                        $type = Type::getType($mapping->type);
-                        $col  = $type->convertToPHPValueSQL($col, $this->platform);
-
-                        $sqlParts[] = $col . ' AS ' . $columnAlias;
-
-                        $this->scalarResultAliasMap[$resultAlias][] = $columnAlias;
-
-                        $this->rsm->addFieldResult($dqlAlias, $columnAlias, $fieldName, $subClassName);
                     }
                 }
 
@@ -1461,7 +1509,14 @@ class SqlWalker
     public function walkNewObject(AST\NewObjectExpression $newObjectExpression, string|null $newObjectResultAlias = null): string
     {
         $sqlSelectExpressions = [];
-        $objIndex             = $newObjectResultAlias ?: $this->newObjectCounter++;
+        $objOwner             = $objOwnerIdx = null;
+
+        if ($this->newObjectStack !== []) {
+            [$objOwner, $objOwnerIdx] = end($this->newObjectStack);
+            $objIndex                 = $objOwner . ':' . $objOwnerIdx;
+        } else {
+            $objIndex = $newObjectResultAlias ?: $this->newObjectCounter++;
+        }
 
         foreach ($newObjectExpression->args as $argIndex => $e) {
             $resultAlias = $this->scalarResultCounter++;
@@ -1470,7 +1525,10 @@ class SqlWalker
 
             switch (true) {
                 case $e instanceof AST\NewObjectExpression:
+                    $this->newObjectStack[] = [$objIndex, $argIndex];
                     $sqlSelectExpressions[] = $e->dispatch($this);
+                    array_pop($this->newObjectStack);
+                    $this->rsm->nestedNewObjectArguments[$columnAlias] = ['ownerIndex' => $objIndex, 'argIndex' => $argIndex];
                     break;
 
                 case $e instanceof AST\Subselect:

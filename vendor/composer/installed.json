@@ -271,17 +271,17 @@
         },
         {
             "name": "doctrine/dbal",
-            "version": "3.9.1",
-            "version_normalized": "3.9.1.0",
+            "version": "3.9.3",
+            "version_normalized": "3.9.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "d7dc08f98cba352b2bab5d32c5e58f7e745c11a7"
+                "reference": "61446f07fcb522414d6cfd8b1c3e5f9e18c579ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/d7dc08f98cba352b2bab5d32c5e58f7e745c11a7",
-                "reference": "d7dc08f98cba352b2bab5d32c5e58f7e745c11a7",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/61446f07fcb522414d6cfd8b1c3e5f9e18c579ba",
+                "reference": "61446f07fcb522414d6cfd8b1c3e5f9e18c579ba",
                 "shasum": ""
             },
             "require": {
@@ -297,7 +297,7 @@
                 "doctrine/coding-standard": "12.0.0",
                 "fig/log-test": "^1",
                 "jetbrains/phpstorm-stubs": "2023.1",
-                "phpstan/phpstan": "1.12.0",
+                "phpstan/phpstan": "1.12.6",
                 "phpstan/phpstan-strict-rules": "^1.6",
                 "phpunit/phpunit": "9.6.20",
                 "psalm/plugin-phpunit": "0.18.4",
@@ -310,7 +310,7 @@
             "suggest": {
                 "symfony/console": "For helpful console commands such as SQL execution and import of files."
             },
-            "time": "2024-09-01T13:49:23+00:00",
+            "time": "2024-10-10T17:56:43+00:00",
             "bin": [
                 "bin/doctrine-dbal"
             ],
@@ -367,7 +367,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/dbal/issues",
-                "source": "https://github.com/doctrine/dbal/tree/3.9.1"
+                "source": "https://github.com/doctrine/dbal/tree/3.9.3"
             },
             "funding": [
                 {
@@ -996,17 +996,17 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "3.8.1",
-            "version_normalized": "3.8.1.0",
+            "version": "3.8.2",
+            "version_normalized": "3.8.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "7760fbd0b7cb58bfb50415505a7bab821adf0877"
+                "reference": "5007eb1168691225ac305fe16856755c20860842"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/7760fbd0b7cb58bfb50415505a7bab821adf0877",
-                "reference": "7760fbd0b7cb58bfb50415505a7bab821adf0877",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/5007eb1168691225ac305fe16856755c20860842",
+                "reference": "5007eb1168691225ac305fe16856755c20860842",
                 "shasum": ""
             },
             "require": {
@@ -1044,7 +1044,7 @@
                 "doctrine/sql-formatter": "Allows to generate formatted SQL with the diff command.",
                 "symfony/yaml": "Allows the use of yaml for migration configuration files."
             },
-            "time": "2024-08-28T13:17:28+00:00",
+            "time": "2024-10-10T21:35:27+00:00",
             "bin": [
                 "bin/doctrine-migrations"
             ],
@@ -1082,7 +1082,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/migrations/issues",
-                "source": "https://github.com/doctrine/migrations/tree/3.8.1"
+                "source": "https://github.com/doctrine/migrations/tree/3.8.2"
             },
             "funding": [
                 {
@@ -1102,17 +1102,17 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "3.2.2",
-            "version_normalized": "3.2.2.0",
+            "version": "3.3.0",
+            "version_normalized": "3.3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "831a1eb7d260925528cdbb49cc1866c0357cf147"
+                "reference": "69958152e661aa9c14e80d1ee4962863485aa60b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/831a1eb7d260925528cdbb49cc1866c0357cf147",
-                "reference": "831a1eb7d260925528cdbb49cc1866c0357cf147",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/69958152e661aa9c14e80d1ee4962863485aa60b",
+                "reference": "69958152e661aa9c14e80d1ee4962863485aa60b",
                 "shasum": ""
             },
             "require": {
@@ -1134,7 +1134,10 @@
             "require-dev": {
                 "doctrine/coding-standard": "^12.0",
                 "phpbench/phpbench": "^1.0",
-                "phpstan/phpstan": "1.11.1",
+                "phpdocumentor/guides-cli": "^1.4",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "1.12.6",
+                "phpstan/phpstan-deprecation-rules": "^1.2",
                 "phpunit/phpunit": "^10.4.0",
                 "psr/log": "^1 || ^2 || ^3",
                 "squizlabs/php_codesniffer": "3.7.2",
@@ -1145,7 +1148,7 @@
                 "ext-dom": "Provides support for XSD validation for XML mapping files",
                 "symfony/cache": "Provides cache support for Setup Tool with doctrine/cache 2.0"
             },
-            "time": "2024-08-23T10:03:52+00:00",
+            "time": "2024-10-12T20:07:18+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1187,7 +1190,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.2.2"
+                "source": "https://github.com/doctrine/orm/tree/3.3.0"
             },
             "install-path": "../doctrine/orm"
         },
@@ -1293,17 +1296,17 @@
         },
         {
             "name": "doctrine/sql-formatter",
-            "version": "1.4.1",
-            "version_normalized": "1.4.1.0",
+            "version": "1.5.0",
+            "version_normalized": "1.5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/sql-formatter.git",
-                "reference": "7f83911cc5eba870de7ebb11283972483f7e2891"
+                "reference": "16ca9e39877369d664f06dacde468548298bdc40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/7f83911cc5eba870de7ebb11283972483f7e2891",
-                "reference": "7f83911cc5eba870de7ebb11283972483f7e2891",
+                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/16ca9e39877369d664f06dacde468548298bdc40",
+                "reference": "16ca9e39877369d664f06dacde468548298bdc40",
                 "shasum": ""
             },
             "require": {
@@ -1311,11 +1314,12 @@
             },
             "require-dev": {
                 "doctrine/coding-standard": "^12",
+                "ergebnis/phpunit-slow-test-detector": "^2.14",
                 "phpstan/phpstan": "^1.10",
                 "phpunit/phpunit": "^10.5",
                 "vimeo/psalm": "^5.24"
             },
-            "time": "2024-08-05T20:32:22+00:00",
+            "time": "2024-09-11T07:29:40+00:00",
             "bin": [
                 "bin/sql-formatter"
             ],
@@ -1345,7 +1349,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/sql-formatter/issues",
-                "source": "https://github.com/doctrine/sql-formatter/tree/1.4.1"
+                "source": "https://github.com/doctrine/sql-formatter/tree/1.5.0"
             },
             "install-path": "../doctrine/sql-formatter"
         },
@@ -1658,17 +1662,17 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.2.0",
-            "version_normalized": "5.2.0.0",
+            "version": "v5.3.1",
+            "version_normalized": "5.3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
-                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/8eea230464783aa9671db8eea6f8c6ac5285794b",
+                "reference": "8eea230464783aa9671db8eea6f8c6ac5285794b",
                 "shasum": ""
             },
             "require": {
@@ -1681,7 +1685,7 @@
                 "ircmaxell/php-yacc": "^0.0.7",
                 "phpunit/phpunit": "^9.0"
             },
-            "time": "2024-09-15T16:40:33+00:00",
+            "time": "2024-10-08T18:51:32+00:00",
             "bin": [
                 "bin/php-parse"
             ],
@@ -1713,7 +1717,7 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.2.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.1"
             },
             "install-path": "../nikic/php-parser"
         },
@@ -2027,17 +2031,17 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.31.0",
-            "version_normalized": "1.31.0.0",
+            "version": "1.33.0",
+            "version_normalized": "1.33.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "249f15fb843bf240cf058372dad29e100cee6c17"
+                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/249f15fb843bf240cf058372dad29e100cee6c17",
-                "reference": "249f15fb843bf240cf058372dad29e100cee6c17",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/82a311fd3690fb2bf7b64d5c98f912b3dd746140",
+                "reference": "82a311fd3690fb2bf7b64d5c98f912b3dd746140",
                 "shasum": ""
             },
             "require": {
@@ -2054,7 +2058,7 @@
                 "phpunit/phpunit": "^9.5",
                 "symfony/process": "^5.2"
             },
-            "time": "2024-09-22T11:32:18+00:00",
+            "time": "2024-10-13T11:25:22+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -2071,7 +2075,7 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.31.0"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.33.0"
             },
             "install-path": "../phpstan/phpdoc-parser"
         },
@@ -5445,17 +5449,17 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v7.1.2",
-            "version_normalized": "7.1.2.0",
+            "version": "v7.1.5",
+            "version_normalized": "7.1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "92a91985250c251de9b947a14bb2c9390b1a562c"
+                "reference": "61fe0566189bf32e8cfee78335d8776f64a66f5a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/92a91985250c251de9b947a14bb2c9390b1a562c",
-                "reference": "92a91985250c251de9b947a14bb2c9390b1a562c",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/61fe0566189bf32e8cfee78335d8776f64a66f5a",
+                "reference": "61fe0566189bf32e8cfee78335d8776f64a66f5a",
                 "shasum": ""
             },
             "require": {
@@ -5466,7 +5470,7 @@
             "require-dev": {
                 "symfony/process": "^6.4|^7.0"
             },
-            "time": "2024-06-28T10:03:55+00:00",
+            "time": "2024-09-17T09:16:35+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -5494,7 +5498,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v7.1.2"
+                "source": "https://github.com/symfony/filesystem/tree/v7.1.5"
             },
             "funding": [
                 {
@@ -5581,22 +5585,25 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v2.4.6",
-            "version_normalized": "2.4.6.0",
+            "version": "v2.4.7",
+            "version_normalized": "2.4.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "4dc11919791f81d087a12db2ab4c7e044431ef6b"
+                "reference": "92f4fba342161ff36072bd3b8e0b3c6c23160402"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/4dc11919791f81d087a12db2ab4c7e044431ef6b",
-                "reference": "4dc11919791f81d087a12db2ab4c7e044431ef6b",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/92f4fba342161ff36072bd3b8e0b3c6c23160402",
+                "reference": "92f4fba342161ff36072bd3b8e0b3c6c23160402",
                 "shasum": ""
             },
             "require": {
                 "composer-plugin-api": "^2.1",
                 "php": ">=8.0"
+            },
+            "conflict": {
+                "composer/semver": "<1.7.2"
             },
             "require-dev": {
                 "composer/composer": "^2.1",
@@ -5605,7 +5612,7 @@
                 "symfony/phpunit-bridge": "^5.4|^6.0",
                 "symfony/process": "^5.4|^6.0"
             },
-            "time": "2024-04-27T10:22:22+00:00",
+            "time": "2024-10-07T08:51:54+00:00",
             "type": "composer-plugin",
             "extra": {
                 "class": "Symfony\\Flex\\Flex"
@@ -5629,7 +5636,7 @@
             "description": "Composer plugin for Symfony",
             "support": {
                 "issues": "https://github.com/symfony/flex/issues",
-                "source": "https://github.com/symfony/flex/tree/v2.4.6"
+                "source": "https://github.com/symfony/flex/tree/v2.4.7"
             },
             "funding": [
                 {
@@ -6157,17 +6164,17 @@
         },
         {
             "name": "symfony/http-kernel",
-            "version": "v7.1.4",
-            "version_normalized": "7.1.4.0",
+            "version": "v7.1.5",
+            "version_normalized": "7.1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-kernel.git",
-                "reference": "6efcbd1b3f444f631c386504fc83eeca25963747"
+                "reference": "44204d96150a9df1fc57601ec933d23fefc2d65b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/6efcbd1b3f444f631c386504fc83eeca25963747",
-                "reference": "6efcbd1b3f444f631c386504fc83eeca25963747",
+                "url": "https://api.github.com/repos/symfony/http-kernel/zipball/44204d96150a9df1fc57601ec933d23fefc2d65b",
+                "reference": "44204d96150a9df1fc57601ec933d23fefc2d65b",
                 "shasum": ""
             },
             "require": {
@@ -6226,7 +6233,7 @@
                 "symfony/var-exporter": "^6.4|^7.0",
                 "twig/twig": "^3.0.4"
             },
-            "time": "2024-08-30T17:02:28+00:00",
+            "time": "2024-09-21T06:09:21+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -6254,7 +6261,7 @@
             "description": "Provides a structured process for converting a Request into a Response",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/http-kernel/tree/v7.1.4"
+                "source": "https://github.com/symfony/http-kernel/tree/v7.1.5"
             },
             "funding": [
                 {
@@ -8637,17 +8644,17 @@
         },
         {
             "name": "symfony/stimulus-bundle",
-            "version": "v2.19.0",
-            "version_normalized": "2.19.0.0",
+            "version": "v2.20.0",
+            "version_normalized": "2.20.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stimulus-bundle.git",
-                "reference": "5e2e1aff3e7cff2875e2f901437543fda9ca9910"
+                "reference": "ae69e3a764694b9f45d8a009dd2b8c22444c5e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/5e2e1aff3e7cff2875e2f901437543fda9ca9910",
-                "reference": "5e2e1aff3e7cff2875e2f901437543fda9ca9910",
+                "url": "https://api.github.com/repos/symfony/stimulus-bundle/zipball/ae69e3a764694b9f45d8a009dd2b8c22444c5e0c",
+                "reference": "ae69e3a764694b9f45d8a009dd2b8c22444c5e0c",
                 "shasum": ""
             },
             "require": {
@@ -8666,7 +8673,7 @@
                 "symfony/twig-bundle": "^5.4|^6.0|^7.0",
                 "zenstruck/browser": "^1.4"
             },
-            "time": "2024-07-30T19:26:23+00:00",
+            "time": "2024-09-24T09:27:42+00:00",
             "type": "symfony-bundle",
             "installation-source": "dist",
             "autoload": {
@@ -8689,7 +8696,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.19.0"
+                "source": "https://github.com/symfony/stimulus-bundle/tree/v2.20.0"
             },
             "funding": [
                 {
@@ -9326,17 +9333,17 @@
         },
         {
             "name": "symfony/ux-turbo",
-            "version": "v2.19.3",
-            "version_normalized": "2.19.3.0",
+            "version": "v2.20.0",
+            "version_normalized": "2.20.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-turbo.git",
-                "reference": "4a38f267193017958d487171c0a86e64f36164a3"
+                "reference": "5eaa803dea9f954aa124963f2c872b414d97cc97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/4a38f267193017958d487171c0a86e64f36164a3",
-                "reference": "4a38f267193017958d487171c0a86e64f36164a3",
+                "url": "https://api.github.com/repos/symfony/ux-turbo/zipball/5eaa803dea9f954aa124963f2c872b414d97cc97",
+                "reference": "5eaa803dea9f954aa124963f2c872b414d97cc97",
                 "shasum": ""
             },
             "require": {
@@ -9367,7 +9374,7 @@
                 "symfony/web-profiler-bundle": "^5.4|^6.0|^7.0",
                 "symfony/webpack-encore-bundle": "^2.1.1"
             },
-            "time": "2024-08-14T04:55:38+00:00",
+            "time": "2024-09-10T12:38:04+00:00",
             "type": "symfony-bundle",
             "extra": {
                 "thanks": {
@@ -9406,7 +9413,7 @@
                 "turbo-stream"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-turbo/tree/v2.19.3"
+                "source": "https://github.com/symfony/ux-turbo/tree/v2.20.0"
             },
             "funding": [
                 {

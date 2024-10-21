@@ -35,11 +35,11 @@ use function substr;
  */
 class EntityRepository implements ObjectRepository, Selectable
 {
-    /** @psalm-var class-string<T> */
+    /** @var class-string<T> */
     private readonly string $entityName;
     private static Inflector|null $inflector = null;
 
-    /** @psalm-param ClassMetadata<T> $class */
+    /** @param ClassMetadata<T> $class */
     public function __construct(
         private readonly EntityManagerInterface $em,
         private readonly ClassMetadata $class,
@@ -131,6 +131,7 @@ class EntityRepository implements ObjectRepository, Selectable
      * @psalm-param array<string, mixed> $criteria
      *
      * @return int The cardinality of the objects that match the given criteria.
+     * @psalm-return 0|positive-int
      *
      * @todo Add this method to `ObjectRepository` interface in the next major release
      */
@@ -168,7 +169,7 @@ class EntityRepository implements ObjectRepository, Selectable
         ));
     }
 
-    /** @psalm-return class-string<T> */
+    /** @return class-string<T> */
     protected function getEntityName(): string
     {
         return $this->entityName;

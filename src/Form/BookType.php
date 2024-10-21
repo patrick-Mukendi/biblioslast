@@ -4,48 +4,67 @@ namespace App\Form;
 
 use App\Entity\Author;
 use App\Entity\Book;
-use App\Entity\Comments;
 use App\Entity\Editor;
+use App\Enum\BookStatus;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 
 class BookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('isbn')
-            ->add('cover')
-            ->add('editedAt', null, [
-                'widget' => 'single_text'
+            ->add('title', TextType::class, [
+                'label' => 'Titre',
             ])
-            ->add('plot')
-            ->add('pageNumber')
-            ->add('status')
-            ->add('comments', EntityType::class, [
-                'class' => Comments::class,
-'choice_label' => 'id',
-'multiple' => true,
+            ->add('isbn', TextType::class, [
+                'label' => 'Code isbn',
             ])
-            ->add('authorBook', EntityType::class, [
+            ->add('cover', UrlType::class, [
+                'label' => 'Couverture',
+            ])
+            ->add('editedAt', DateType::class, [
+                'widget' => 'single_text',
+                'input' => 'datetime_immutable',
+                'label' => 'Edité le',
+            ])
+            ->add('plot', TextareaType::class, [
+                'label' => 'Description',
+            ])
+            ->add('pageNumber', NumberType::class, [
+                'input' => 'number',
+                'label' => 'Nombre de Page',
+            ])
+            ->add('status', EnumType::class, [
+                'class' => BookStatus::class,
+                'label' => 'Disponibilé',
+            ])
+            ->add('authors', EntityType::class, [
                 'class' => Author::class,
-'choice_label' => 'id',
+                'choice_label' => 'name',
+                'label' => 'Auteur',
             ])
-            ->add('commentBook', EntityType::class, [
-                'class' => Comments::class,
-'choice_label' => 'id',
-'multiple' => true,
-            ])
-            ->add('editorBook', EntityType::class, [
+            ->add('editor', EntityType::class, [
                 'class' => Editor::class,
-'choice_label' => 'id',
+                'choice_label' => 'name',
+                'label' => 'Editeur',
             ])
-            ->add('authorbook', EntityType::class, [
-                'class' => Author::class,
-'choice_label' => 'id',
+            ->add('certification', CheckboxType::class, [
+                'mapped' => false,
+                'label' => "Je certifie l'exactitude des informations fournies",
+                'constraints' => [
+                    new IsTrue(message: 'Vous devez cocher la case pour ajouter un livre.'),
+                ],
             ])
         ;
     }

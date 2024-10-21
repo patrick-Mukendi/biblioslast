@@ -3,14 +3,12 @@
 namespace App\Entity;
 
 use App\Enum\BookStatus;
-use App\Repository\CommentsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommentsRepository::class)]
-class Comments
+#[ORM\Entity(repositoryClass: CommentRepository::class)]
+class Comment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -26,7 +24,7 @@ class Comments
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $publishedAt = null;
 
     #[ORM\Column(length: 255)]
@@ -35,23 +33,11 @@ class Comments
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    /**
-     * @var Collection<int, Book>
-     */
-    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'comments')]
-    private Collection $book;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    private ?Book $bookComment = null;
 
-    /**
-     * @var Collection<int, Book>
-     */
-    #[ORM\ManyToMany(targetEntity: Book::class, inversedBy: 'commentBook')]
-    private Collection $books;
-
-    public function __construct()
-    {
-        $this->book = new ArrayCollection();
-        $this->books = new ArrayCollection();
-    }
+    #[ORM\ManyToOne]
+    private ?Book $book = null;
 
     public function getId(): ?int
     {
@@ -99,7 +85,7 @@ class Comments
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeImmutable $publishedAt): static
+    public function setPublishedAt(?\DateTimeImmutable $publishedAt): static
     {
         $this->publishedAt = $publishedAt;
 
@@ -130,38 +116,27 @@ class Comments
         return $this;
     }
 
-    /**
-     * @return Collection<int, Book>
-     */
-    public function getBook(): Collection
+    public function getBookComment(): ?Book
+    {
+        return $this->bookComment;
+    }
+
+    public function setBookComment(?Book $bookComment): static
+    {
+        $this->bookComment = $bookComment;
+
+        return $this;
+    }
+
+    public function getBook(): ?Book
     {
         return $this->book;
     }
 
-    public function addBook(Book $book): static
+    public function setBook(?Book $book): static
     {
-        if (!$this->book->contains($book)) {
-            $this->book->add($book);
-            $book->addComment($this);
-        }
+        $this->book = $book;
 
         return $this;
-    }
-
-    public function removeBook(Book $book): static
-    {
-        if ($this->book->removeElement($book)) {
-            $book->removeComment($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Book>
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
     }
 }
