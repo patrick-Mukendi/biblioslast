@@ -19,10 +19,10 @@
                 </div>
                 <div class="d-flex justify-content-between card-text">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Date de naissance : {{ author.dateOfBirth }}</li>
-                        <li class="list-group-item">Date de décès : {{ author.dateOfDeath }}</li>
+                        <li class="list-group-item">Date de naissance : {{ author.dateOfBirth |date('d M Y') }}</li>
+                        <li class="list-group-item">Date de décès : {{ author.dateOfDeath  is not null ? author.dateOfDeath|date('d M Y') : '-' }}</li>
+                        <li class="list-group-item"><small>Nationalité : {{ author.nationality }}</small></li>
                     </ul>
-                    <p><small>Nationalité : {{ author.nationality }}</small></p>
                 </div>
             </div>
         </div>
