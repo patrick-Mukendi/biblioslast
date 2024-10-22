@@ -1,6 +1,0 @@
-framework:
-  webhook:
-    routing:
-      github:
-        service: App\Webhook\GithubRequestParser
-        secret: your_secret_here

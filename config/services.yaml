@@ -4,9 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    telegram_api_token: '%env(7568804861:AAGlX9eJOApf9sSWSiuTRltzHnHzPRCf5Pk)%'
-    github_webhook_secret: '%env(123456789)%'
-
 services:
     # default configuration for services in *this* file
     _defaults:

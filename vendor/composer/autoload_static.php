@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
+class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -41,7 +41,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
             'Twig\\Extra\\TwigExtraBundle\\' => 27,
             'Twig\\Extra\\Intl\\' => 16,
             'Twig\\' => 5,
-            'TelegramBot\\Api\\' => 16,
         ),
         'S' => 
         array (
@@ -61,7 +60,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
             'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Contracts\\Cache\\' => 24,
             'Symfony\\Component\\Yaml\\' => 23,
-            'Symfony\\Component\\Webhook\\' => 26,
             'Symfony\\Component\\WebLink\\' => 26,
             'Symfony\\Component\\VarExporter\\' => 30,
             'Symfony\\Component\\VarDumper\\' => 28,
@@ -76,7 +74,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
             'Symfony\\Component\\Security\\Core\\' => 32,
             'Symfony\\Component\\Runtime\\' => 26,
             'Symfony\\Component\\Routing\\' => 26,
-            'Symfony\\Component\\RemoteEvent\\' => 30,
             'Symfony\\Component\\PropertyInfo\\' => 31,
             'Symfony\\Component\\PropertyAccess\\' => 33,
             'Symfony\\Component\\Process\\' => 26,
@@ -193,10 +190,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
         ),
-        'TelegramBot\\Api\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/telegram-bot/api/src',
-        ),
         'Symfony\\UX\\Turbo\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/ux-turbo/src',
@@ -261,10 +254,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'Symfony\\Component\\Webhook\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/webhook',
-        ),
         'Symfony\\Component\\WebLink\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/web-link',
@@ -320,10 +309,6 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         'Symfony\\Component\\Routing\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/routing',
-        ),
-        'Symfony\\Component\\RemoteEvent\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/symfony/remote-event',
         ),
         'Symfony\\Component\\PropertyInfo\\' => 
         array (
@@ -1268,9 +1253,9 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit775c1067cba3f8a2796463b6b3388a72::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit775c1067cba3f8a2796463b6b3388a72::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit775c1067cba3f8a2796463b6b3388a72::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd::$classMap;
 
         }, null, ClassLoader::class);
     }

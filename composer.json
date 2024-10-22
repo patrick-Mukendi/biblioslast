@@ -31,7 +31,6 @@
         "symfony/process": "7.1.*",
         "symfony/property-access": "7.1.*",
         "symfony/property-info": "7.1.*",
-        "symfony/remote-event": "7.1.*",
         "symfony/runtime": "7.1.*",
         "symfony/security-bundle": "7.1.*",
         "symfony/serializer": "7.1.*",
@@ -43,9 +42,7 @@
         "symfony/ux-turbo": "^2.19",
         "symfony/validator": "7.1.*",
         "symfony/web-link": "7.1.*",
-        "symfony/webhook": "7.1.*",
         "symfony/yaml": "7.1.*",
-        "telegram-bot/api": "^2.5",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.13",
         "twig/twig": "^2.12|^3.0"
