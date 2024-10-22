@@ -39,7 +39,9 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         'T' => 
         array (
             'Twig\\Extra\\TwigExtraBundle\\' => 27,
+            'Twig\\Extra\\Intl\\' => 16,
             'Twig\\' => 5,
+            'TelegramBot\\Api\\' => 16,
         ),
         'S' => 
         array (
@@ -59,6 +61,7 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
             'Symfony\\Contracts\\EventDispatcher\\' => 34,
             'Symfony\\Contracts\\Cache\\' => 24,
             'Symfony\\Component\\Yaml\\' => 23,
+            'Symfony\\Component\\Webhook\\' => 26,
             'Symfony\\Component\\WebLink\\' => 26,
             'Symfony\\Component\\VarExporter\\' => 30,
             'Symfony\\Component\\VarDumper\\' => 28,
@@ -73,11 +76,13 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
             'Symfony\\Component\\Security\\Core\\' => 32,
             'Symfony\\Component\\Runtime\\' => 26,
             'Symfony\\Component\\Routing\\' => 26,
+            'Symfony\\Component\\RemoteEvent\\' => 30,
             'Symfony\\Component\\PropertyInfo\\' => 31,
             'Symfony\\Component\\PropertyAccess\\' => 33,
             'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\PasswordHasher\\' => 33,
             'Symfony\\Component\\OptionsResolver\\' => 34,
+            'Symfony\\Component\\Notifier\\Bridge\\Telegram\\' => 43,
             'Symfony\\Component\\Notifier\\' => 27,
             'Symfony\\Component\\Mime\\' => 23,
             'Symfony\\Component\\Messenger\\Bridge\\Doctrine\\' => 44,
@@ -180,9 +185,17 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         array (
             0 => __DIR__ . '/..' . '/twig/extra-bundle',
         ),
+        'Twig\\Extra\\Intl\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/intl-extra',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'TelegramBot\\Api\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/telegram-bot/api/src',
         ),
         'Symfony\\UX\\Turbo\\' => 
         array (
@@ -248,6 +261,10 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
+        'Symfony\\Component\\Webhook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/webhook',
+        ),
         'Symfony\\Component\\WebLink\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/web-link',
@@ -304,6 +321,10 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         array (
             0 => __DIR__ . '/..' . '/symfony/routing',
         ),
+        'Symfony\\Component\\RemoteEvent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/remote-event',
+        ),
         'Symfony\\Component\\PropertyInfo\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/property-info',
@@ -323,6 +344,10 @@ class ComposerStaticInit775c1067cba3f8a2796463b6b3388a72
         'Symfony\\Component\\OptionsResolver\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/options-resolver',
+        ),
+        'Symfony\\Component\\Notifier\\Bridge\\Telegram\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/telegram-notifier',
         ),
         'Symfony\\Component\\Notifier\\' => 
         array (
