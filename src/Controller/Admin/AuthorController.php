@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AuthorController extends AbstractController
 {
-    #[Route('/admin/author', name: 'app_admin_author', methods: ['GET', 'POST'])]
+    #[Route('/admin/author/new', name: 'app_admin_author', methods: ['GET', 'POST'])]
     public function index(Request $request, EntityManagerInterface $manager): Response
     {
         $author = new Author();
@@ -28,15 +28,22 @@ class AuthorController extends AbstractController
         }
 
         return $this->render('admin/author/index.html.twig', [
-            'controller_name' => 'AuthorController',
             'form' => $form,
         ]);
     }
 
-    #[Route('/admin/author_view', name: 'app_admin_author_view', methods: ['GET'])]
-    public function indexView(AuthorRepository $repository): Response
+    #[Route('/admin/author', name: 'app_admin_author_view', methods: ['GET'])]
+    public function indexView(Request $request, AuthorRepository $repository): Response
     {
-        $author = $repository->findAll();
+        $date=[];
+        if($request->query->has('start')){
+            $date['start'] = $request->query->get('start');
+        }
+
+        if($request->query->has('end')){
+            $date['end'] = $request->query->get('end');
+        }
+        $author = $repository->findByDateOfBirth($date);
 
         return $this->render('admin/author/index_view.html.twig', [
             'controller_name' => 'AuthorController',
@@ -44,7 +51,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/author/{id}', name: 'app_admin_author_show', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[Route('/admin/author/show/{id}', name: 'app_admin_author_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(?Author $author = null): Response
     {
         return $this->render('admin/author/show_view.html.twig', [

@@ -13,16 +13,15 @@ class EditorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'Nom complet',])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Editor::class, [
-                'label' => 'Nom complet',
-            ],
+            'data_class' => Editor::class
         ]);
     }
 }

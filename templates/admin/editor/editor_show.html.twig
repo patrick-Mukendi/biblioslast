@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Author {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 50px; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .btnRetour {width: 50px; margin-left:20px}
+</style>
+
+<div class="example-wrapper">
+    <h1>Detail Editeur: </h1>
+    {% if editor is not null %}
+        <div class="card mb-1 m-auto">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <h4 class="mb-1">{{ editor.name }}</h4>
+                    <small class="text-muted">Identifiant : {{ editor.id }}</small>
+                </div>
+            </div>
+        </div> 
+         <div class="btnRetour">
+             <a href="{{ path('app_admin_editor_view') }}" class="btn btn-primary">Retour</a>
+        </div>
+    {% else %}
+        <div>Auteur non trouvé</div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -211,7 +211,7 @@ class Book
     {
         return $this->authorBook;
     }
-
+    
     public function setAuthorBook(?Author $authorBook): static
     {
         $this->authorBook = $authorBook;
