@@ -4,16 +4,21 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 50px; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        label.required:before {
+            content: "* ";
+        }
 </style>
+     <section id="about">
+        <div class="container px-4">
+            <div class="row gx-4 justify-content-center">
+                <div class="col-lg-5">
+                    <h1>Author</h1>
 
-<div class="example-wrapper" >
-    <h1>Author</h1>
-
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-       <button type="submit" class="btn btn-primary">Envoyer</button>
-    {{ form_end(form) }}
-</div>
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
 {% endblock %}
