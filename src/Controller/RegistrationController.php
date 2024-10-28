@@ -42,10 +42,12 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute(route: 'app_main');
         }
     } catch (\Throwable $th) {
-       
 
        if(str_contains($th->getMessage(),'Duplicate')) {
-            $error = 'Cet Email Existe déjà';
+            $error = 'Un utilisateur existe déjà  avec ce adresse';
+       }
+       else {
+             dd(''.$th->getMessage());
        }
     }
         return $this->render('registration/register.html.twig', [
