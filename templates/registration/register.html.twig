@@ -7,6 +7,10 @@
         label.required:before {
             content: "* ";
         }
+        .Error{
+            color: red;
+            margin-left: 20dp;
+        }
     </style>
 
     <section id="about">
@@ -17,13 +21,19 @@
                     <span class="text-muted"><small>*: champ requis</small></span>
 
                     {{ form_errors(registrationForm) }} 
-                    
-
                     {{ form_start(registrationForm) }}
                     {{ form_row(registrationForm.firstname, {label: 'Prénom'}) }}
                     {{ form_row(registrationForm.lastname, {label: 'Nom'}) }}
                     {{ form_row(registrationForm.username, {label: 'Nom d\'utilisateur'}) }}
                     {{ form_row(registrationForm.email, {label: 'Adresse email'}) }}
+                     {% if error_register !=''  %}
+
+                        <div class='Error'>
+                            <p>{{error_register}}</p>
+                        </div>
+                            
+                    {% endif %}
+
                     {{ form_row(registrationForm.roles, {label: 'Rôles'}) }}
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Mot de passe'

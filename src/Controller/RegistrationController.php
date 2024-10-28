@@ -14,9 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
+  
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-    {
+    {  
+        $error = '';
         try {
             //code...
       
@@ -39,10 +42,15 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute(route: 'app_main');
         }
     } catch (\Throwable $th) {
-       dd($th);
+       
+
+       if(str_contains($th->getMessage(),'Duplicate')) {
+            $error = 'Cet Email Existe déjà';
+       }
     }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'error_register' => $error,
         ]);
     }
 }
