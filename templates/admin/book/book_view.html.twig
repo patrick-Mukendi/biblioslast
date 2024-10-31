@@ -18,10 +18,21 @@
                         <div class="card mb-1">
                             <div class="card-body">
                                 <div class="card-title d-flex justify-content-between">
-                                    <a href="{{ path('app_admin_book_show', {id: items.id}) }}" class="stretched-link link-dark">
-                                        <h4 class="mb-1">{{ items.title }}</h4>
-                                    </a>
+                                    <h4 class="mb-1">{{ items.title }}</h4>
                                     <small class="text-muted">Identifiant: {{items.id}}</small>
+                                    <div>
+                                        <button type="button"><a href="{{ path('app_admin_book_show', {id: items.id}) }}" >
+                                            View
+                                        </a>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button type="button"><a href="{{ path('app_admin_book_edit', {id: items.id}) }}">
+                                            Edit
+                                        </a></button>
+                                    </div>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>

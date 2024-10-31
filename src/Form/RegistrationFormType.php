@@ -51,6 +51,7 @@ class RegistrationFormType extends AbstractType
                 ],
                 'multiple' => true,
                 'expanded' => true,
+                'required' => true,
             ])
          
             

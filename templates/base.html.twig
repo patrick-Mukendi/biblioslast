@@ -19,13 +19,28 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="{{path('app_admin_book_view')}}">Book</a></li>
+                    
+                           {% if app.user == null %}
+                                <li class="nav-item"><a class="nav-link" href="{{path('app_login')}}">Login</a></li>
+                           
+                            {% elseif is_granted('ROLE_ADMIN')%}
+                                <li class="nav-item"><a class="nav-link" href="{{path('app_register')}}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{path('app_admin_manager')}}">Manager</a></li>
+                                 <li class="nav-item"><a class="nav-link" href="{{path('app_logout')}}">Logout</a></li>
+                           {% else %}
+                                 <li class="nav-item"><a class="nav-link" href="{{path('app_main')}}">Book</a></li>
+                                 <li class="nav-item"><a class="nav-link" href="{{path('app_logout')}}">Logout</a></li>
+                            {% endif %}
+                           
+                        
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Header-->
-        {% block body %}{% endblock %}
+        {% block body %}
+       
+        {% endblock %}
 
          <!-- Footer-->
         <footer class="py-5 bg-dark">

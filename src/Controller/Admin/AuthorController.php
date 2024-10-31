@@ -10,12 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class AuthorController extends AbstractController
 {
     #[Route('/admin/author/new', name: 'app_admin_author', methods: ['GET', 'POST'])]
-    public function index(Request $request, EntityManagerInterface $manager): Response
+    public function new(Request $request, EntityManagerInterface $manager): Response
     {
+    
+       $this->IsGranted('ROLE_ADMIN');
+
         $author = new Author();
         $form = $this->createForm(AuthorType::class, $author);
 
@@ -32,6 +36,7 @@ class AuthorController extends AbstractController
         ]);
     }
 
+  
     #[Route('/admin/author', name: 'app_admin_author_view', methods: ['GET'])]
     public function indexView(Request $request, AuthorRepository $repository): Response
     {

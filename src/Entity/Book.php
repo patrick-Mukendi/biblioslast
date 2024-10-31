@@ -35,6 +35,10 @@ class Book
     #[ORM\Column(type: Types::TEXT)]
     private ?string $plot = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $createdBy = null;
+
     #[ORM\Column]
     private ?int $pageNumber = null;
 
@@ -228,6 +232,17 @@ class Book
     {
         $this->editorBook = $editorBook;
 
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): static
+    {
+        $this->createdBy = $createdBy;
         return $this;
     }
 }

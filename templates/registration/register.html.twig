@@ -33,12 +33,10 @@
                         </div>
                             
                     {% endif %}
-
                     {{ form_row(registrationForm.roles, {label: 'Rôles'}) }}
                     {{ form_row(registrationForm.plainPassword, {
                         label: 'Mot de passe'
                     }) }}
-
                     <button type="submit" class="btn btn-outline-primary">Enregistrer</button>
                     {{ form_end(registrationForm) }}
                 </div>

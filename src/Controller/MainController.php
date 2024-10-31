@@ -11,8 +11,14 @@ class MainController extends AbstractController
     #[Route('/', name: 'app_main')]
     public function index(): Response
     {
+        $isAuthentification = false;
+
+        if($this->getUser() != null){
+            $isAuthentification = true;
+        }
+       
         return $this->render('main/index.html.twig', [
-            'controller_name' => 'HOME PAGE',
+            'statutAuth' => $isAuthentification,
         ]);
     }
 }
