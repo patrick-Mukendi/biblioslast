@@ -14,19 +14,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class EditorController extends AbstractController
 {
     #[Route('/admin/editor/new', name: 'app_admin_editor_new', methods: ['POST', 'GET'])]
-    public function new(Request $request, EntityManagerInterface $manager): Response
+    public function new (Request $request, EntityManagerInterface $manager): Response
     {
         $editor = new Editor();
         $form = $this->createForm(EditorType::class, $editor);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $manager->persist($editor);
             $manager->flush();
-
             return $this->redirectToRoute('app_admin_editor_view');
         }
-
         return $this->render('admin/editor/index.html.twig', [
             'form' => $form,
         ]);
