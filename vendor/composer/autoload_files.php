@@ -24,4 +24,7 @@ return array(
     'f598d06aa772fa33d905e87be6398fb1' => $vendorDir . '/symfony/polyfill-intl-idn/bootstrap.php',
     '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     'a1105708a18b76903365ca1c4aa61b02' => $vendorDir . '/symfony/translation/Resources/functions.php',
+    '4f9a1929b39ff2a6c1016427077d16f5' => $vendorDir . '/zenstruck/foundry/src/functions.php',
+    '21978ed596d07828c426dc898e1f08e0' => $vendorDir . '/zenstruck/foundry/src/Persistence/functions.php',
+    'a8d29b081027eaae7a081084fff435bd' => $vendorDir . '/zenstruck/foundry/src/phpunit_helper.php',
 );

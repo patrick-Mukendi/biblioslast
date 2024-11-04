@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class BookController extends AbstractController
 {
-    #[Route('/admin/book/{id}/edit', name: 'app_admin_book_edit', requirements:['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[Route('/admin/book/{id}/edit', name: 'app_admin_book_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/admin/book/new', name: 'app_admin_book_new', methods: ['GET', 'POST'])]
-    public function new(?Book $book, Request $request, EntityManagerInterface $manager): Response
+    public function new (?Book $book, Request $request, EntityManagerInterface $manager): Response
     {
         $book ??= new Book();
         $form = $this->createForm(BookType::class, $book);
@@ -24,7 +24,7 @@ class BookController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
-            if(! $book->getId() && $user instanceof User) {
+            if (!$book->getId() && $user instanceof User) {
                 $book->setCreatedBy($user);
             }
 
@@ -45,11 +45,11 @@ class BookController extends AbstractController
         $book = $bookRepository->findAll();
 
         return $this->render('admin/book/book_view.html.twig', [
-            'book' => $book,
+            'books' => $book,
         ]);
     }
 
-    #[Route('/admin/book/show/{id}', name: 'app_admin_book_show', requirements:['id' => '\d+'], methods: ['GET', 'POST'])]
+    #[Route('/admin/book/show/{id}', name: 'app_admin_book_show', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function show(?Book $book = null): Response
     {
         return $this->render('admin/book/book_show.html.twig', [

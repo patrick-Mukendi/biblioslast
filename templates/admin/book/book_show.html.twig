@@ -1,46 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin Book {% endblock %}
+{% set page_title = book is null ? 'Livre inconnu' : book.title %}
+
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block body %}
-<style>
-        label.required:before {
-            content: "* ";
-        }
-</style>
-     <section id="about">
-        <div class="container px-4">
-            <div class="row gx-4 justify-content-center">
-                <div class="col-lg-5">
-                    <h1>Detail Book: </h1>
-                    {% if book is not null %}
-                        <div class="card mb-1 m-auto">
-                            <div class="card-body">
-                                <div class="card-title d-flex justify-content-between">
-                                    <h4 class="mb-1">{{ book.title }}</h4>
-                                    <small class="text-muted">Identifiant : {{ book.id }}</small>
-                                </div>
-                                <div class="d-flex justify-content-between card-text">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">isbn : {{ book.isbn }}</li>
-                                        <li class="list-group-item">Couverture : {{ book.cover }}</li>
-                                        <li class="list-group-item">Editeé le : {{ book.editedAt |date('d M Y') }}</li>
-                                        <li class="list-group-item">Description : {{ book.plot }}</li>
-                                        <li class="list-group-item">Page : {{ book.pageNumber }}</li>
-                                        <li class="list-group-item">Disponibilé : {{ book.status.value }}</li>
-                                        <li class="list-group-item">Auteur : {{ book.authors }}</li>
-                                        <li class="list-group-item">Editeur : {{ book.editor }}</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        
-                            
-                        </div> 
-                        <div class="btnRetour">
-                            <a href="{{ path('app_admin_book_view') }}" class="btn btn-primary">Retour</a>
-                        </div>
-                    {% else %}
-                        <div>Auteur non trouvé</div>
-                    {% endif %}
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0 w-75" src="{{ book.cover }}" alt="Couverture de {{ book.title }}" /></div>
+                <div class="col-md-6">
+                    <div class="small mb-1">ISBN: {{ book.isbn }}</div>
+                    <h1 class="display-5 fw-bolder">{{ page_title }}</h1>
+                    <div class="fs-5">
+                        <span>Auteur(s): {{ book.authors}}</span>
+                    </div>
+                    <div class="fs-5">
+                        <span>Éditeur: {{ book.editor.name }}</span>
+                    </div>
+                    <div class="fs-5">
+                        <span>{{ book.pageNumber }}{{ book.pageNumber is not null ? ' pages' }}</span>
+                        <span> - {{ book.editedAt|date('d M Y') }}</span>
+                    </div>
+                    <div class="fs-5 mb-5">
+                        <span>Statut: {{ book.status.getLabel() }}</span>
+                    </div>
+                    <p class="lead">{{ book.plot }}</p>
+                    <div class="d-flex">
+                        <a href="{{ path('app_admin_book_view') }}">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                Retour à la liste
+                            </button>
+                        </a>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

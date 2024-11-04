@@ -26,13 +26,15 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
+    #[Assert\NotBlank()]
+    #[Assert\Url()]
     #[ORM\Column(length: 255)]
     private ?string $cover = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $editedAt = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type : Types::TEXT)]
     private ?string $plot = null;
 
     #[ORM\ManyToOne]
@@ -215,7 +217,7 @@ class Book
     {
         return $this->authorBook;
     }
-    
+
     public function setAuthorBook(?Author $authorBook): static
     {
         $this->authorBook = $authorBook;

@@ -3,44 +3,36 @@
 {% block title %}Livre {% endblock %}
 
 {% block body %}
-<style>
-        label.required:before {
-            content: "* ";
-        }
-</style>
-     <section id="about">
-        <div class="container px-4">
-            <div class="row gx-4 justify-content-center">
-                <div class="col-lg-5">
-                    <h1>Livre</h1>
-                    <ul class="list-group list-group-flush"> 
-                    {% for items in book %}
-                        <div class="card mb-1">
-                            <div class="card-body">
-                                <div class="card-title d-flex justify-content-between">
-                                    <h4 class="mb-1">{{ items.title }}</h4>
-                                    <small class="text-muted">Identifiant: {{items.id}}</small>
-                                    <div>
-                                        <button type="button"><a href="{{ path('app_admin_book_show', {id: items.id}) }}" >
-                                            View
-                                        </a>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button type="button"><a href="{{ path('app_admin_book_edit', {id: items.id}) }}">
-                                            Edit
-                                        </a></button>
-                                    </div>
-                                    
-                                    
-                                </div>
-                            </div>
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for book in books %}
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Couverture du livre-->
+                    <img class="card-img-top" src="{{ book.cover }}" alt="Couverture de {{ book.title }}" />
+                    <!-- Détails du livre-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Titre du livre-->
+                            <h5 class="fw-bolder">{{ book.title }}</h5>
+                            <!-- Auteurs du livre-->
+                            {{ book.authors}}
                         </div>
-                    {% else %}
-                        <li>Pas de livre</li>
-                    {% endfor %}
-                    </ul>
+                    </div>
+                    <!-- Action-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{{ path('app_admin_book_show', {id: book.id}) }}">Voir</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-         </div>
+            {% else %}
+                <p>Aucun livre actuellement</p>
+            {% endfor %}
+        </div>
+       
+    </div>
+</section>
 {% endblock %}

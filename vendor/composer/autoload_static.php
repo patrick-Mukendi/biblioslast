@@ -25,12 +25,21 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
+        '4f9a1929b39ff2a6c1016427077d16f5' => __DIR__ . '/..' . '/zenstruck/foundry/src/functions.php',
+        '21978ed596d07828c426dc898e1f08e0' => __DIR__ . '/..' . '/zenstruck/foundry/src/Persistence/functions.php',
+        'a8d29b081027eaae7a081084fff435bd' => __DIR__ . '/..' . '/zenstruck/foundry/src/phpunit_helper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'Z' => 
+        array (
+            'Zenstruck\\Foundry\\Psalm\\' => 24,
+            'Zenstruck\\Foundry\\' => 18,
+            'Zenstruck\\' => 10,
         ),
         'W' => 
         array (
@@ -134,6 +143,10 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
             'Monolog\\' => 8,
             'Masterminds\\' => 12,
         ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
+        ),
         'E' => 
         array (
             'Egulias\\EmailValidator\\' => 23,
@@ -149,10 +162,12 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
             'Doctrine\\Deprecations\\' => 22,
             'Doctrine\\DBAL\\' => 14,
             'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\DataFixtures\\' => 29,
             'Doctrine\\Common\\Collections\\' => 28,
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\' => 16,
             'Doctrine\\Bundle\\MigrationsBundle\\' => 33,
+            'Doctrine\\Bundle\\FixturesBundle\\' => 31,
             'Doctrine\\Bundle\\DoctrineBundle\\' => 31,
             'DeepCopy\\' => 9,
         ),
@@ -173,6 +188,18 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'Zenstruck\\Foundry\\Psalm\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/foundry/utils/psalm',
+        ),
+        'Zenstruck\\Foundry\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/foundry/src',
+        ),
+        'Zenstruck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zenstruck/assert/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -522,6 +549,10 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fakerphp/faker/src/Faker',
+        ),
         'Egulias\\EmailValidator\\' => 
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
@@ -562,6 +593,10 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/src',
         ),
+        'Doctrine\\Common\\DataFixtures\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/data-fixtures/src',
+        ),
         'Doctrine\\Common\\Collections\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/collections/src',
@@ -577,6 +612,10 @@ class ComposerStaticInita91301ebc6f9a7b1ab6515266115fdbd
         'Doctrine\\Bundle\\MigrationsBundle\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/doctrine-migrations-bundle',
+        ),
+        'Doctrine\\Bundle\\FixturesBundle\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/doctrine-fixtures-bundle/src',
         ),
         'Doctrine\\Bundle\\DoctrineBundle\\' => 
         array (

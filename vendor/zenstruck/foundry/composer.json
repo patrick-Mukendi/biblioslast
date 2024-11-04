@@ -1,0 +1,99 @@
+{
+    "name": "zenstruck/foundry",
+    "description": "A model factory library for creating expressive, auto-completable, on-demand dev/test fixtures with Symfony and Doctrine.",
+    "homepage": "https://github.com/zenstruck/foundry",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["fixture", "factory", "test", "symfony", "faker", "doctrine", "dev"],
+    "authors": [
+        {
+            "name": "Kevin Bond",
+            "email": "kevinbond@gmail.com"
+        },
+        {
+            "name": "Nicolas PHILIPPE",
+            "email": "nikophil@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "doctrine/persistence": "^2.0|^3.0",
+        "fakerphp/faker": "^1.23",
+        "symfony/deprecation-contracts": "^2.2|^3.0",
+        "symfony/framework-bundle": "^6.4|^7.0",
+        "symfony/property-access": "^6.4|^7.0",
+        "symfony/var-exporter": "^6.4.9|~7.0.9|^7.1.2",
+        "zenstruck/assert": "^1.4"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8",
+        "dama/doctrine-test-bundle": "^7.0|^8.0",
+        "doctrine/collections": "^1.7|^2.0",
+        "doctrine/common": "^3.2",
+        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/doctrine-migrations-bundle": "^2.2|^3.0",
+        "doctrine/mongodb-odm-bundle": "^4.6|^5.0",
+        "doctrine/orm": "^2.16|^3.0",
+        "phpunit/phpunit": "^9.5.0 || ^10.0 || ^11.0",
+        "symfony/console": "^6.4|^7.0",
+        "symfony/dotenv": "^6.4|^7.0",
+        "symfony/maker-bundle": "^1.55",
+        "symfony/phpunit-bridge": "^6.4|^7.0",
+        "symfony/translation-contracts": "^3.4",
+        "symfony/var-dumper": "^6.4|^7.0",
+        "symfony/yaml": "^6.4|^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Zenstruck\\Foundry\\": "src/",
+            "Zenstruck\\Foundry\\Psalm\\": "utils/psalm"
+        },
+        "files": ["src/functions.php", "src/Persistence/functions.php", "src/phpunit_helper.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zenstruck\\Foundry\\Tests\\": ["tests/"],
+            "App\\": "tests/Fixture/Maker/tmp/src",
+            "App\\Tests\\": "tests/Fixture/Maker/tmp/tests"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true,
+            "symfony/flex": true
+        }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "target-directory": "bin/tools",
+            "bin-links": true,
+            "forward-command": false
+        },
+        "psalm": {
+            "pluginClass": "Zenstruck\\Foundry\\Psalm\\FoundryPlugin"
+        }
+    },
+    "scripts": {
+        "test": [
+            "@test-schema-no-dama",
+            "@test-migrate-no-dama",
+            "@test-schema-dama",
+            "@test-migrate-dama"
+        ],
+        "test-schema-no-dama": "DATABASE_RESET_MODE=schema USE_DAMA_DOCTRINE_TEST_BUNDLE=0 ./phpunit",
+        "test-migrate-no-dama": "DATABASE_RESET_MODE=migrate USE_DAMA_DOCTRINE_TEST_BUNDLE=0 ./phpunit",
+        "test-schema-dama": "DATABASE_RESET_MODE=schema USE_DAMA_DOCTRINE_TEST_BUNDLE=1 ./phpunit",
+        "test-migrate-dama": "DATABASE_RESET_MODE=migrate USE_DAMA_DOCTRINE_TEST_BUNDLE=1 ./phpunit"
+    },
+    "scripts-descriptions": {
+        "test": "Run all test permutations",
+        "test-schema-no-dama": "Test with schema reset (no dama/doctrine-test-bundle)",
+        "test-migrate-no-dama": "Test with migrations reset (no dama/doctrine-test-bundle)",
+        "test-schema-dama": "Test with schema reset and dama/doctrine-test-bundle",
+        "test-migrate-dama": "Test with migrations reset and dama/doctrine-test-bundle"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
