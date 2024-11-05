@@ -26,29 +26,22 @@ class Author
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $dateOfBirth = null;
 
-    #[Assert\GreaterThan(propertyPath: 'dateOfBirth')]
+    #[Assert\GreaterThan(propertyPath : 'dateOfBirth')]
     #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
     private ?\DateTimeImmutable $dateOfDeath = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length : 255, nullable: true)]
     private ?string $nationality = null;
 
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authors')]
-    private Collection $bookAuthor;
-
-    /**
-     * @var Collection<int, Book>
-     */
-    #[ORM\OneToMany(targetEntity: Book::class, mappedBy: 'authorBook')]
-    private Collection $books;
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'authors')]
+    private Collection $bookAuthors;
 
     public function __construct()
     {
-        $this->bookAuthor = new ArrayCollection();
-        $this->books = new ArrayCollection();
+        $this->bookAuthors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -85,7 +78,7 @@ class Author
         return $this->dateOfDeath;
     }
 
-    public function setDateOfDeath(?\DateTimeImmutable $dateOfDeath): static
+    public function setDateOfDeath( ? \DateTimeImmutable $dateOfDeath): static
     {
         $this->dateOfDeath = $dateOfDeath;
 
@@ -104,19 +97,24 @@ class Author
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
+
     /**
      * @return Collection<int, Book>
      */
-    public function getBookAuthor(): Collection
+    public function getBookAuthors(): Collection
     {
-        return $this->bookAuthor;
+        return $this->bookAuthors;
     }
 
     public function addBookAuthor(Book $bookAuthor): static
     {
-        if (!$this->bookAuthor->contains($bookAuthor)) {
-            $this->bookAuthor->add($bookAuthor);
-            $bookAuthor->setAuthors($this);
+        if (!$this->bookAuthors->contains($bookAuthor)) {
+            $this->bookAuthors->add($bookAuthor);
+            $bookAuthor->addAuthor($this);
         }
 
         return $this;
@@ -124,48 +122,11 @@ class Author
 
     public function removeBookAuthor(Book $bookAuthor): static
     {
-        if ($this->bookAuthor->removeElement($bookAuthor)) {
-            // set the owning side to null (unless already changed)
-            if ($bookAuthor->getAuthors() === $this) {
-                $bookAuthor->setAuthors(null);
-            }
+        if ($this->bookAuthors->removeElement($bookAuthor)) {
+            $bookAuthor->removeAuthor($this);
         }
 
         return $this;
-    }
-
-    /**
-     * @return Collection<int, Book>
-     */
-    public function getBooks(): Collection
-    {
-        return $this->books;
-    }
-
-    public function addBook(Book $book): static
-    {
-        if (!$this->books->contains($book)) {
-            $this->books->add($book);
-            $book->setAuthorBook($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBook(Book $book): static
-    {
-        if ($this->books->removeElement($book)) {
-            // set the owning side to null (unless already changed)
-            if ($book->getAuthorBook() === $this) {
-                $book->setAuthorBook(null);
-            }
-        }
-
-        return $this;
-    }
-    public function __toString(): string
-    {
-        return $this->getName();
     }
 
 }

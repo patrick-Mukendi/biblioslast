@@ -47,9 +47,6 @@ class Book
     #[ORM\Column(length: 255)]
     private ?BookStatus $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'bookAuthor')]
-    private ?Author $authors = null;
-
     #[ORM\ManyToOne(inversedBy: 'bookEditor')]
     private ?Editor $editor = null;
 
@@ -65,9 +62,16 @@ class Book
     #[ORM\ManyToOne(inversedBy: 'books')]
     private ?Editor $editorBook = null;
 
+    /**
+     * @var Collection<int, Author>
+     */
+    #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'bookAuthors')]
+    private Collection $authors;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->authors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,18 +163,6 @@ class Book
         return $this;
     }
 
-    public function getAuthors(): ?Author
-    {
-        return $this->authors;
-    }
-
-    public function setAuthors(?Author $authors): static
-    {
-        $this->authors = $authors;
-
-        return $this;
-    }
-
     public function getEditor(): ?Editor
     {
         return $this->editor;
@@ -218,13 +210,6 @@ class Book
         return $this->authorBook;
     }
 
-    public function setAuthorBook(?Author $authorBook): static
-    {
-        $this->authorBook = $authorBook;
-
-        return $this;
-    }
-
     public function getEditorBook(): ?Editor
     {
         return $this->editorBook;
@@ -245,6 +230,30 @@ class Book
     public function setCreatedBy(?User $createdBy): static
     {
         $this->createdBy = $createdBy;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Author>
+     */
+    public function getAuthors(): Collection
+    {
+        return $this->authors;
+    }
+
+    public function addAuthor(Author $author): static
+    {
+        if (!$this->authors->contains($author)) {
+            $this->authors->add($author);
+        }
+
+        return $this;
+    }
+
+    public function removeAuthor(Author $author): static
+    {
+        $this->authors->removeElement($author);
+
         return $this;
     }
 }

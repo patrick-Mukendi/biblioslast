@@ -13,7 +13,7 @@
                     <div class="small mb-1">ISBN: {{ book.isbn }}</div>
                     <h1 class="display-5 fw-bolder">{{ page_title }}</h1>
                     <div class="fs-5">
-                        <span>Auteur(s): {{ book.authors}}</span>
+                         <span>Auteur(s): {{ book.authors|map(a => a.name)|join(', ') }}</span>
                     </div>
                     <div class="fs-5">
                         <span>Éditeur: {{ book.editor.name }}</span>

@@ -1,19 +1,27 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello ManagerController!{% endblock %}
+{% block stylesheets %}
+    <style>
+        #list a{
+            margin: 10px;
+        }
+
+        .return {
+            margin: 10px;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-<style>
-    #list a{
-        margin: 10px;
-    }
+ <header class="bg-primary bg-gradient text-white">
+             <div class="container px-4 text-center">
+                 <h1 class="fw-bolder">{{app.user.firstname}} {{app.user.lastname}}</h1>
+                 <p class="lead">{{app.user.email}} </p>
+             </div>
+</header>
 
-     .return {
-        margin: 10px;
-    }
-</style>
-
- <section id="about">
+ <section id="bodyall">
             <div class="container px-4">
                 <div class="row gx- justify-content-center">
                     <div class="col-lg-3" id="list">
@@ -24,11 +32,11 @@
                             <a href="{{ path('app_admin_book_view') }}" class="btn btn-primary">View Book</a>
                         <a href="{{ path('app_admin_editor_new') }}" class="btn btn-primary">Add Editor</a>
                             <a href="{{ path('app_admin_editor_view') }}" class="btn btn-primary">View Editor</a>
-            </div>
+                    </div>
                 </div>
                 <div class="return">
                   <a href="{{ path('app_main') }}" class="btn btn-primary">Accueil</a>
                 </div>
-               
-                    </div>                   
+             </div>   
+</section>                
 {% endblock %}

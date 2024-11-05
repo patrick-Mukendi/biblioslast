@@ -17,7 +17,7 @@
                             <!-- Titre du livre-->
                             <h5 class="fw-bolder">{{ book.title }}</h5>
                             <!-- Auteurs du livre-->
-                            {{ book.authors}}
+                             {{ book.authors|map(a => a.name)|join(', ') }}
                         </div>
                     </div>
                     <!-- Action-->
