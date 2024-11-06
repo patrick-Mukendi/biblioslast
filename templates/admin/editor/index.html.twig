@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedashbord.html.twig' %}
 
 {% block title %}Editor{% endblock %}
 
@@ -8,11 +8,11 @@
          content: "* ";
     }
 </style>
-        <section id="bodyall">
-            <div class="container px-4">
+        <section class="about">
+            <div class="container px-5">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-5">
-                        <h1>Edtor</h1>
+                        <h1>Editor</h1>
 
                         {{ form_start(form) }}
                         {{ form_widget(form) }}

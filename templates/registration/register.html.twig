@@ -1,9 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Register{% endblock %}
-
-{% block body %}
-    <style>
+{% block stylesheet %}
+ <style>
         label.required:before {
             content: "* ";
         }
@@ -11,12 +10,17 @@
             color: red;
             margin-left: 20dp;
         }
+        .btn{ margin-bottom: 20px}
     </style>
+{% endblock %}
 
-    <section id="bodyall">
+{% block body %}
+   
+
+    <section id="about">
         <div class="container px-4">
             <div class="row gx-4 justify-content-center">
-                <div class="col-lg-5">
+                <div class="col-lg-5" id="bodyregister">
                     <h2>Enregistrement</h2>
                     <span class="text-muted"><small>*: champ requis</small></span>
 

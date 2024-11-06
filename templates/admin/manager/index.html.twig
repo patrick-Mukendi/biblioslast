@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedashbord.html.twig' %}
 
 {% block title %}Hello ManagerController!{% endblock %}
 {% block stylesheets %}
@@ -10,33 +10,56 @@
         .return {
             margin: 10px;
         }
+       .card border-primary{
+        color: red;
+       }
     </style>
 {% endblock %}
 
 {% block body %}
- <header class="bg-primary bg-gradient text-white">
-             <div class="container px-4 text-center">
-                 <h1 class="fw-bolder">{{app.user.firstname}} {{app.user.lastname}}</h1>
-                 <p class="lead">{{app.user.email}} </p>
-             </div>
-</header>
+ 
+ <section class="about" >
+ <div class="row">
+   <div class="bar-chart"><h7>User</h7>
+        <div class="bar" style="height: 50%;">Janvier</div>
+        <div class="bar" style="height: 70%;">Février</div>
+        <div class="bar" style="height: 90%;">Mars</div>
+        <div class="bar" style="height: 40%;">Avril</div>
+        <div class="bar" style="height: 60%;">Mai</div>
+    </div>
+    <br>
+      <div class="bar-chart"><h7>Book</h7>
+        <div class="bar" style="height: 50%;">Janvier</div>
+        <div class="bar" style="height: 70%;">Février</div>
+        <div class="bar" style="height: 90%;">Mars</div>
+        <div class="bar" style="height: 40%;">Avril</div>
+        <div class="bar" style="height: 60%;">Mai</div>
+    </div>
+    <br>
+ </div>
+  
 
- <section id="bodyall">
-            <div class="container px-4">
-                <div class="row gx- justify-content-center">
-                    <div class="col-lg-3" id="list">
-                        <h1>Manager</h1>
-                        <a href="{{ path('app_admin_author') }}" class="btn btn-primary">Add Author</a>
-                            <a href="{{ path('app_admin_author_view') }}" class="btn btn-primary">View Author</a>
-                        <a href="{{ path('app_admin_book_new') }}" class="btn btn-primary">Add Book</a>
-                            <a href="{{ path('app_admin_book_view') }}" class="btn btn-primary">View Book</a>
-                        <a href="{{ path('app_admin_editor_new') }}" class="btn btn-primary">Add Editor</a>
-                            <a href="{{ path('app_admin_editor_view') }}" class="btn btn-primary">View Editor</a>
-                    </div>
-                </div>
-                <div class="return">
-                  <a href="{{ path('app_main') }}" class="btn btn-primary">Accueil</a>
-                </div>
-             </div>   
-</section>                
+ <div class="row">
+    <div class="bar-chart"><h7>Author</h7>
+            <div class="bar" style="height: 50%;">Janvier</div>
+            <div class="bar" style="height: 70%;">Février</div>
+            <div class="bar" style="height: 90%;">Mars</div>
+            <div class="bar" style="height: 40%;">Avril</div>
+            <div class="bar" style="height: 60%;">Mai</div>
+        </div>
+        <br>
+    <div class="bar-chart"><h7>Editor</h7>
+            <div class="bar" style="height: 50%;">Janvier</div>
+            <div class="bar" style="height: 70%;">Février</div>
+            <div class="bar" style="height: 90%;">Mars</div>
+            <div class="bar" style="height: 40%;">Avril</div>
+            <div class="bar" style="height: 60%;">Mai</div>
+        </div>
+        <br>
+ </div>
+ 
+
+
+</section>  
+     
 {% endblock %}

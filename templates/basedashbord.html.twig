@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,10 +43,49 @@
                 </div>
             </div>
         </nav>
-        {% block body %} {% endblock %}
-        {% block body1 %} {% endblock %}
+        <div class="admin-container">
+          <aside class="sidebar navbar-expand-lg  bg-dark fixed-top">
+            <h2>Admin Panel</h2>
+            <nav>
+            
+              <div class="col ">
+                  <div class="col">
+                          <p>Author</p>
+                          <a href="{{ path('app_admin_author') }}" class="btn btn-primary ">Add</a>
+                          <a href="{{ path('app_admin_author_view') }}" class="btn btn-primary">View</a>
+                          <hr>
+                  </div>
+                  <div class="col">
+                          <p>Editor</p>
+                          <a href="{{ path('app_admin_editor_new') }}" class="btn btn-primary">Add</a>
+                          <a href="{{ path('app_admin_editor_view') }}" class="btn btn-primary">View</a>
+                          <hr>
+                  </div>
+                  <div class="col">
+                          <p>Book</p>
+                          <a href="{{ path('app_admin_book_new') }}" class="btn btn-primary">Add</a>
+                          <a href="{{ path('app_admin_book_view') }}" class="btn btn-primary">View</a>
+                  </div>
+              </div>
+          </nav>
+        </aside>
+
+          <main class="main-content">
+            <header class="header">
+              <h1>Bienvenue dans le panneau d'administration</h1>
+               <h1 class="fw-bolder">{{app.user.firstname}} {{app.user.lastname}}</h1>
+                 <p class="lead">{{app.user.email}} </p>
+            </header>
+            <section class="content">
+              {% block body %} 
+
+              {% endblock %}
+            </section>
+          </main>
+        </div>
+
         <!-- Footer-->
-        <footer class="py-5 bg-dark fixed-botton ">
+        <footer class="py-5 bg-dark" id="footer">
             <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Biblios</p></div>
         </footer>
     </body>
