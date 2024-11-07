@@ -28,15 +28,13 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_book_view') }}">Catalogue</a></li>
+                       <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_book_view') }}">Catalogue</a></li>
                         {% if app.user is null %}
                         <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED') %}
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_manager') }}">Administration</a></li>
-                        {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">Nouvel utilisateur</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                         {% endif %}
                     </ul>
                 </div>

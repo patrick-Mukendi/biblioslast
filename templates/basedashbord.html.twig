@@ -10,10 +10,14 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <style>
-                .body{
+               .body{
                     content: center;
                     width: 100vh;
                 }
+                .sidebottom .hr{
+                  width: 25;
+                }
+                
             </style>
         {% endblock %}
 
@@ -35,9 +39,7 @@
                         {% endif %}
                         {% if is_granted('IS_AUTHENTICATED') %}
                             <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_manager') }}">Administration</a></li>
-                        {% endif %}
-                        {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">Nouvel utilisateur</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Deconnexion</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -45,7 +47,7 @@
         </nav>
         <div class="admin-container">
           <aside class="sidebar navbar-expand-lg  bg-dark fixed-top">
-            <h2>Admin Panel</h2>
+            <h5>Admin Panel</h5>
             <nav>
             
               <div class="col ">
@@ -65,17 +67,18 @@
                           <p>Book</p>
                           <a href="{{ path('app_admin_book_new') }}" class="btn btn-primary">Add</a>
                           <a href="{{ path('app_admin_book_view') }}" class="btn btn-primary">View</a>
+                          <hr>
+                          <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">* Ajouter Utilisateur</a></li>
+                  </div>
+                  <div class="sidebottom fixed-bottom m-2">
+                    <p> {{app.user.firstname}} {{app.user.lastname}}</p>
                   </div>
               </div>
           </nav>
         </aside>
 
           <main class="main-content">
-            <header class="header">
-              <h1>Bienvenue dans le panneau d'administration</h1>
-               <h1 class="fw-bolder">{{app.user.firstname}} {{app.user.lastname}}</h1>
-                 <p class="lead">{{app.user.email}} </p>
-            </header>
+            
             <section class="content">
               {% block body %} 
 

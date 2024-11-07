@@ -8,14 +8,13 @@
 {% block javascripts %}
     <script src="{{ asset('js/scripts.js') }}"></script>
 {% endblock %}
-
 {% block body %}
 <style>
     label.required:before {
          content: "* ";
     }
 </style>
-        <section id="bodyall">
+        <section id="about">
             <div class="container px-4">
                 <div class="row gx-4 justify-content-center">
                     <div class="col-lg-5">
@@ -25,10 +24,11 @@
                                 <div class="card mb-1">
                                     <div class="card-body">
                                         <div class="card-title d-flex justify-content-between">
-                                        <a href="{{ path('app_admin_editor_show', {id: items.id}) }}" class="stretched-link link-dark">
                                                 <h4 class="mb-1">{{ items.name }}</h4>
-                                            </a>
+                                          
                                             <small class="text-muted">Identifiant: {{items.id}}</small>
+                                            <a href="{{ path('app_admin_editor_show', {id: items.id}) }}" class="btn btn-outline-dark mt-auto" > Show</a>
+                                            <a href="{{ path('app_admin_editor_edit', {id: items.id}) }}" class="btn btn-outline-dark mt-auto" > Edit</a>
                                         </div>
                                     </div>
                                 </div>

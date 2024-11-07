@@ -16,6 +16,16 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    public function findBookBySearchBar(string $searchBar): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.title LIKE :val')
+            ->setParameter('val', '%' . $searchBar . '%')
+            ->orderBy('b.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 //    /**
 //     * @return Book[] Returns an array of Book objects
 //     */

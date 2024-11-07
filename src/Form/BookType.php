@@ -53,6 +53,7 @@ class BookType extends AbstractType
                 'class' => Author::class,
                 'choice_label' => 'name',
                 'label' => 'Auteur',
+                'multiple' => true,
             ])
             ->add('editor', EntityType::class, [
                 'class' => Editor::class,

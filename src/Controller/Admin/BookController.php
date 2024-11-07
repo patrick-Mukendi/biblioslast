@@ -20,9 +20,10 @@ class BookController extends AbstractController
     {
         $book ??= new Book();
         $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $user = $this->getUser();
             if (!$book->getId() && $user instanceof User) {
                 $book->setCreatedBy($user);
@@ -39,10 +40,20 @@ class BookController extends AbstractController
         ]);
     }
 
+    #[Route('/admin/book/method=', name: 'app_admin_book_view_search', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     #[Route('/admin/book', name: 'app_admin_book_view', methods: ['GET', 'POST'])]
-    public function view(BookRepository $bookRepository): Response
+    public function view(BookRepository $bookRepository, Request $request): Response
     {
-        $book = $bookRepository->findAll();
+        $values = (string) $request->query->get('q');
+
+        if (isset($values)) {
+
+            $book = $bookRepository->findBookBySearchBar($values);
+
+        } else {
+
+            $book = $bookRepository->findAll();
+        }
 
         return $this->render('admin/book/book_view.html.twig', [
             'books' => $book,

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'basedashbord.html.twig' %}
 
 {% block title %}Auteur Add{% endblock %}
 
@@ -8,7 +8,7 @@
             content: "* ";
         }
 </style>
-     <section id="bodyall">
+     <section id="about">
         <div class="container px-4">
             <div class="row gx-4 justify-content-center">
                 <div class="col-lg-5">
@@ -18,10 +18,10 @@
                         <div class="card mb-1">
                             <div class="card-body">
                                 <div class="card-title d-flex justify-content-between">
-                                    <a href="{{ path('app_admin_author_show', {id: items.id}) }}" class="stretched-link link-dark">
-                                        <h4 class="mb-1">{{ items.name }}</h4>
-                                    </a>
+                                    <h4 class="mb-1">{{ items.name }}</h4>
                                     <small class="text-muted">Identifiant: {{items.id}}</small>
+                                     <a class="btn btn-outline-dark mt-auto" href="{{ path('app_admin_author_show', {id: items.id}) }}" class="stretched-link link-dark">Show</a>
+                                    <a class="btn btn-outline-dark mt-auto" href="{{ path('app_admin_author_edit', {id: items.id}) }}" class="stretched-link link-dark">Edit</a>
                                 </div>
                             </div>
                         </div>

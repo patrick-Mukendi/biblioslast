@@ -13,10 +13,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class EditorController extends AbstractController
 {
+    #[Route('/admin/editor/{id}/edit', requirements: ['id' => '\d+'], name: 'app_admin_editor_edit', methods: ['GET'])]
     #[Route('/admin/editor/new', name: 'app_admin_editor_new', methods: ['POST', 'GET'])]
-    public function new (Request $request, EntityManagerInterface $manager): Response
+    public function new (?Editor $editor, Request $request, EntityManagerInterface $manager): Response
     {
-        $editor = new Editor();
+        $editor ?? new Editor();
+
         $form = $this->createForm(EditorType::class, $editor);
         $form->handleRequest($request);
 
