@@ -15,15 +15,7 @@
                     <div class="col-lg-5">
                         <h1>{{action}} Book</h1>
                         {{ form_start(form) }}
-                        {{ form_row(form.title) }}
-                        {{ form_row(form.isbn) }}
-                        {{ form_row(form.cover) }}
-                        {{ form_row(form.editedAt) }}
-                        {{ form_row(form.plot) }}
-                        {{ form_row(form.pageNumber) }}
-                        {{ form_row(form.status) }}
-                        {{ form_row(form.authors) }}
-                        {{ form_row(form.editor) }}
+                        {{ form_widget(form) }}
                             <button type="submit" class="btn btn-primary">{{action}}</button>
                         {{ form_end(form) }}
                     </div>

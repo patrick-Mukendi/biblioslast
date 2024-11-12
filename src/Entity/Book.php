@@ -8,9 +8,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[Vich\Uploadable()]
 class Book
 {
     #[ORM\Id]
@@ -26,10 +29,12 @@ class Book
     #[ORM\Column(length: 255)]
     private ?string $isbn = null;
 
-    #[Assert\NotBlank()]
-    #[Assert\Url()]
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
+
+    #[Vich\UploadableField(mapping: 'books', fileNameProperty: 'cover')]
+    #[Assert\Image()]
+    private $imageFile = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $editedAt = null;
@@ -255,5 +260,16 @@ class Book
         $this->authors->removeElement($author);
 
         return $this;
+    }
+    public function setImageFile(?File $imageFile = null): static
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
     }
 }

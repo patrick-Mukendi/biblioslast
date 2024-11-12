@@ -53,7 +53,7 @@ use Zenstruck\Foundry\Utils\Rector\FoundrySetList;
 return RectorConfig::configure()
     ->withPaths([
         // add all paths where your factories are defined and where Foundry is used
-        'src/Factory'
+        'src/Factory',
         'tests'
     ])
     ->withSets([FoundrySetList::UP_TO_FOUNDRY_2])
@@ -92,6 +92,8 @@ If the mapping is defined outside the code, with xml, yaml or php configuration,
 
 1. Create a `tests/object-manager.php` file which will expose your doctrine config. Here is an example:
 ```php
+<?php
+
 use App\Kernel;
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -246,7 +248,7 @@ This implies that calling `->object()` (or, now, `_real()`) everywhere to satisf
   - `enableAutoRefresh()` -> `_enableAutoRefresh()`
   - `disableAutoRefresh()` -> `_disableAutoRefresh()`
   - `withoutAutoRefresh()` -> `_withoutAutoRefresh()`
-  - `assertPersisted()` -> `_assertPersisted()` 
+  - `assertPersisted()` -> `_assertPersisted()`
   - `assertNotPersisted()` -> `_assertNotPersisted()`
   - `isPersisted()` is removed without any replacement
   - `forceSetAll()` is removed without any replacement

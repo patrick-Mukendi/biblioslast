@@ -14,10 +14,10 @@ use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class BookType extends AbstractType
 {
@@ -30,9 +30,7 @@ class BookType extends AbstractType
             ->add('isbn', TextType::class, [
                 'label' => 'Code isbn',
             ])
-            ->add('cover', UrlType::class, [
-                'label' => 'Couverture',
-            ])
+            ->add('imageFile', VichFileType::class, ['required' => false])
             ->add('editedAt', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [v2.2.2](https://github.com/zenstruck/foundry/releases/tag/v2.2.2)
+
+November 5th, 2024 - [v2.2.1...v2.2.2](https://github.com/zenstruck/foundry/compare/v2.2.1...v2.2.2)
+
+* 3282f24 Remove @internal from db resetter interfaces (#715) by @HypeMC
+* 870cb42 docs: fix missing comma in upgrade doc (#718) by @justpilot
+
 ## [v2.2.1](https://github.com/zenstruck/foundry/releases/tag/v2.2.1)
 
 October 31st, 2024 - [v2.2.0...v2.2.1](https://github.com/zenstruck/foundry/compare/v2.2.0...v2.2.1)
