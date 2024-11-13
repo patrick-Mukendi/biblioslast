@@ -17,7 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
-use Vich\UploaderBundle\Form\Type\VichFileType;
+use Symfony\UX\Dropzone\Form\DropzoneType;
 
 class BookType extends AbstractType
 {
@@ -30,7 +30,7 @@ class BookType extends AbstractType
             ->add('isbn', TextType::class, [
                 'label' => 'Code isbn',
             ])
-            ->add('imageFile', VichFileType::class, ['required' => false])
+
             ->add('editedAt', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
@@ -64,6 +64,9 @@ class BookType extends AbstractType
                 'constraints' => [
                     new IsTrue(message: 'Vous devez cocher la case pour ajouter un livre.'),
                 ],
+            ])
+            ->add('imageFile', DropzoneType::class, [
+                'required' => false,
             ])
         ;
     }

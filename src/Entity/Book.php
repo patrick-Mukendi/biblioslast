@@ -32,9 +32,9 @@ class Book
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
 
-    #[Vich\UploadableField(mapping: 'books', fileNameProperty: 'cover')]
+    #[Vich\UploadableField(mapping: 'books', fileNameProperty: 'cover', )]
     #[Assert\Image()]
-    private $imageFile = null;
+    private ?File $imageFile = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $editedAt = null;
@@ -261,10 +261,13 @@ class Book
 
         return $this;
     }
-    public function setImageFile(?File $imageFile = null): static
+    public function setImageFile(?File $imageFile = null): self
     {
-        $this->imageFile = $imageFile;
-
+        if (null !== $imageFile) {
+            // It is required that at least one field changes iff you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->editedAt = new \DateTimeImmutable();
+        }
         return $this;
     }
 

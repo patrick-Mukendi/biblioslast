@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1b64aa69f186693eb7bd511b7080e1fe0b1e0455',
+        'reference' => 'b5e3e3c4fc85e11d95f6dfaf50877b2a86b1a037',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1b64aa69f186693eb7bd511b7080e1fe0b1e0455',
+            'reference' => 'b5e3e3c4fc85e11d95f6dfaf50877b2a86b1a037',
             'dev_requirement' => false,
         ),
         'composer/semver' => array(
@@ -448,8 +448,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache-implementation' => array(
@@ -1272,6 +1272,15 @@
             'install_path' => __DIR__ . '/../symfony/type-info',
             'aliases' => array(),
             'reference' => 'a13032128c307470955c45c99201349b15cd7f4a',
+            'dev_requirement' => false,
+        ),
+        'symfony/ux-dropzone' => array(
+            'pretty_version' => 'v2.21.0',
+            'version' => '2.21.0.0',
+            'type' => 'symfony-bundle',
+            'install_path' => __DIR__ . '/../symfony/ux-dropzone',
+            'aliases' => array(),
+            'reference' => 'ad7889144bb245665c894f63bd732f3927d8e4a1',
             'dev_requirement' => false,
         ),
         'symfony/ux-turbo' => array(

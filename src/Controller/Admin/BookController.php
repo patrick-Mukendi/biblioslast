@@ -18,12 +18,14 @@ class BookController extends AbstractController
     #[Route('/admin/book/new', name: 'app_admin_book_new', methods: ['GET', 'POST'])]
     public function new (?Book $book, Request $request, EntityManagerInterface $manager): Response
     {
+
         $book ??= new Book();
         $form = $this->createForm(BookType::class, $book);
-
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
+            //dd($form->get('imageFile')->getData());
             $user = $this->getUser();
             if (!$book->getId() && $user instanceof User) {
                 $book->setCreatedBy($user);

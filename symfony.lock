@@ -269,6 +269,9 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/ux-dropzone": {
+        "version": "v2.21.0"
+    },
     "symfony/ux-turbo": {
         "version": "v2.19.3"
     },

@@ -1,10 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Doctrine\ORM\Mapping\Builder;
-
-use function constant;
 
 /**
  * Field Builder
@@ -13,7 +11,7 @@ use function constant;
  */
 class FieldBuilder
 {
-    private bool $version               = false;
+    private bool $version = false;
     private string|null $generatedValue = null;
 
     /** @var mixed[]|null */
@@ -95,7 +93,7 @@ class FieldBuilder
      */
     public function insertable(bool $flag = true): self
     {
-        if (! $flag) {
+        if (!$flag) {
             $this->mapping['notInsertable'] = true;
         }
 
@@ -109,7 +107,7 @@ class FieldBuilder
      */
     public function updatable(bool $flag = true): self
     {
-        if (! $flag) {
+        if (!$flag) {
             $this->mapping['notUpdatable'] = true;
         }
 

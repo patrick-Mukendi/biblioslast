@@ -1,4 +1,4 @@
-{% extends 'basedashbord.html.twig' %}
+{% extends 'base.html.twig' %}
 {% set action  = app.current_route == 'app_admin_book_new' ? 'Ajouter' : 'Modifier' %}
 
 {% block title %}Book{% endblock %}
@@ -15,7 +15,16 @@
                     <div class="col-lg-5">
                         <h1>{{action}} Book</h1>
                         {{ form_start(form) }}
-                        {{ form_widget(form) }}
+                        {{ form_errors(form) }}
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.isbn) }}                       
+                        {{ form_row(form.editedAt) }}
+                        {{ form_row(form.plot) }}
+                        {{ form_row(form.pageNumber) }}
+                        {{ form_row(form.status) }}
+                        {{ form_row(form.authors) }}
+                        {{ form_row(form.editor) }}
+                        {{ form_row(form.imageFile) }}
                             <button type="submit" class="btn btn-primary">{{action}}</button>
                         {{ form_end(form) }}
                     </div>
